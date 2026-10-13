@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">SD NEGERI 2 PONCOKUSUMO - Website Resmi & CMS Admin</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- HEADER & NAVIGASI -->
+    <header class="sticky top-0 z-40 bg-white shadow-md border-b-2 border-teal-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo & Name Dynamic -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('beranda')">
+                    <div id="publicLogoContainer" class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center text-2xl font-bold shadow-md overflow-hidden shrink-0">
+                        <!-- Loaded dynamically -->
+                    </div>
+                    <div>
+                        <h1 id="publicNamaSekolahHeader" class="text-xl font-extrabold text-gray-900 tracking-tight leading-none">SD NEGERI 2 PONCOKUSUMO</h1>
+                        <p id="publicSloganHeader" class="text-xs text-teal-600 font-bold mt-1">Cerdas, Berkarakter, & Berbudaya</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex space-x-1 items-center font-medium text-sm">
+                    <button onclick="showSection('beranda')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Beranda</button>
+                    <button onclick="showSection('profil')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Profil</button>
+                    <button onclick="showSection('guru')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Guru & Staf</button>
+                    <button onclick="showSection('ekstra')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Ekstrakurikuler</button>
+                    <button onclick="showSection('ppdb')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition font-bold text-teal-700 bg-teal-50">PPDB 2027/2028</button>
+                    <button onclick="showSection('berita')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Berita</button>
+                    <button onclick="showSection('galeri')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Galeri</button>
+                    <button onclick="showSection('kontak')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Kontak</button>
+                    
+                    <span id="authNavButton">
+                        <!-- Switchable by JS -->
+                    </span>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="text-gray-600 hover:text-teal-600 p-2 text-xl focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2 font-medium">
+            <button onclick="showSection('beranda'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Beranda</button>
+            <button onclick="showSection('profil'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Profil</button>
+            <button onclick="showSection('guru'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Guru & Staf</button>
+            <button onclick="showSection('ekstra'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Ekstrakurikuler</button>
+            <button onclick="showSection('ppdb'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md bg-teal-50 text-teal-700 font-bold">PPDB 2027/2028</button>
+            <button onclick="showSection('berita'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Berita</button>
+            <button onclick="showSection('galeri'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Galeri Foto</button>
+            <button onclick="showSection('kontak'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Kontak</button>
+            <div id="authNavButtonMobile" class="pt-2 border-t border-gray-100">
+                <!-- Switchable by JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+        
+        <!-- SECTION: BERANDA -->
+        <section id="section-beranda" class="page-section">
+            <div id="heroBanner" class="relative bg-cover bg-center text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden shadow-inner transition-all duration-500">
+                <div class="absolute inset-0 bg-gradient-to-r from-teal-900/90 via-blue-900/85 to-indigo-950/90"></div>
+                <div class="max-w-5xl mx-auto text-center relative z-10">
+                    <span id="publicHeroTag" class="inline-block px-4 py-1.5 bg-teal-400/20 text-teal-200 rounded-full text-xs font-bold tracking-wider uppercase mb-4 border border-teal-300/30 backdrop-blur-sm">Selamat Datang di Portal Resmi</span>
+                    <h2 id="publicHeroJudul" class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight drop-shadow-md">SD NEGERI 2 PONCOKUSUMO</h2>
+                    <p id="publicHeroDeskripsi" class="text-lg sm:text-xl text-teal-100 max-w-3xl mx-auto mb-8 font-light">Mewujudkan generasi penerus bangsa yang unggul dalam prestasi, berkarakter mulia, serta berwawasan lingkungan.</p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button onclick="showSection('ppdb')" class="px-6 py-3 bg-teal-500 text-white font-bold rounded-xl shadow-lg hover:bg-teal-600 transition transform hover:-translate-y-0.5 border border-teal-400">
+                            <i class="fa-solid fa-user-plus mr-2"></i> Info PPDB 2027/2028
+                        </button>
+                        <button onclick="showSection('profil')" class="px-6 py-3 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl shadow-lg hover:bg-white/20 border border-white/20 transition">
+                            <i class="fa-solid fa-school mr-2"></i> Jelajahi Profil
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sambutan Kepala Sekolah -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="bg-white rounded-2xl shadow-sm border border-teal-100 p-6 md:p-8 flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/3 flex flex-col items-center text-center">
+                        <div class="w-44 h-44 rounded-full overflow-hidden border-4 border-teal-500 shadow-md mb-3 bg-teal-50">
+                            <img id="publicFotoKepsek" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Kepala Sekolah" class="w-full h-full object-cover">
+                        </div>
+                        <h3 id="publicNamaKepsek" class="font-bold text-gray-900 text-lg">Kepala Sekolah</h3>
+                        <p class="text-xs text-teal-600 font-semibold">Kepala Sekolah SD NEGERI 2 PONCOKUSUMO</p>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <div class="flex items-center gap-2 text-teal-600 font-bold text-sm mb-2">
+                            <i class="fa-solid fa-quote-left"></i> SAMBUTAN KEPALA SEKOLAH
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Selamat Datang di Portal Resmi</h3>
+                        <p id="publicSambutanKepsek" class="text-gray-600 leading-relaxed whitespace-pre-line text-sm md:text-base">
+                            Sistem informasi sekolah ini hadir untuk memenuhi kebutuhan informasi civitas akademika dan masyarakat luas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Berita & Pengumuman Ringkasan -->
+            <div class="bg-slate-100/70 py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-end mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Berita & Pengumuman Terbaru</h2>
+                            <p class="text-sm text-gray-500">Informasi kegiatan dan agenda terbaru sekolah</p>
+                        </div>
+                        <button onclick="showSection('berita')" class="text-teal-600 font-bold hover:underline text-sm hidden sm:block">Lihat Semua Berita &rarr;</button>
+                    </div>
+
+                    <div id="homeBeritaContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: PROFIL -->
+        <section id="section-profil" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Profil Sekolah</h2>
+                    <p class="text-gray-500 mt-2">Mengenal Lebih Dekat Lembaga Pendidikan Kami</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-200 p-8 rounded-2xl shadow-sm">
+                        <div class="w-12 h-12 bg-teal-600 text-white rounded-xl flex items-center justify-center text-xl mb-4 shadow">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Visi Sekolah</h3>
+                        <div id="publicVisi" class="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-line">
+                            Loading Visi...
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 p-8 rounded-2xl shadow-sm">
+                        <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center text-xl mb-4 shadow">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Misi Sekolah</h3>
+                        <div id="publicMisi" class="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-line">
+                            Loading Misi...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 border-b border-gray-100 pb-3">Informasi Umum Sekolah</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm">
+                        <div>
+                            <span class="text-gray-400 block text-xs">NPSN</span>
+                            <span id="publicNpsn" class="font-semibold text-gray-800">-</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block text-xs">Status Sekolah</span>
+                            <span id="publicStatusSekolah" class="font-semibold text-gray-800">-</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block text-xs">Akreditasi</span>
+                            <span id="publicAkreditasi" class="font-bold text-teal-600">-</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block text-xs">Kecamatan</span>
+                            <span id="publicKecamatan" class="font-semibold text-gray-800">-</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block text-xs">Kabupaten / Kota</span>
+                            <span id="publicKabupaten" class="font-semibold text-gray-800">-</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block text-xs">Jenjang Pendidikan</span>
+                            <span id="publicJenjang" class="font-semibold text-gray-800">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: GURU & STAF -->
+        <section id="section-guru" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Guru & Tenaga Pendidik</h2>
+                    <p class="text-gray-500 mt-2">Pengajar Profesional SD NEGERI 2 PONCOKUSUMO</p>
+                </div>
+
+                <div id="publicGuruGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Dynamic loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: EKSTRAKURIKULER -->
+        <section id="section-ekstra" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Program Ekstrakurikuler</h2>
+                    <p class="text-gray-500 mt-2">Wadah Pengembangan Bakat, Minat & Karakter Siswa</p>
+                </div>
+
+                <div id="publicEkstraGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Dynamic loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: PPDB 2027/2028 -->
+        <section id="section-ppdb" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gradient-to-r from-teal-700 to-blue-800 rounded-3xl p-8 md:p-12 text-white shadow-xl mb-12">
+                    <div class="max-w-3xl">
+                        <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white rounded-full text-xs font-bold uppercase mb-4">Penerimaan Peserta Didik Baru</span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">PPDB TAHUN AJARAN 2027 / 2028</h2>
+                        <p class="text-teal-100 text-base md:text-lg mb-8 leading-relaxed">Pendaftaran Siswa Baru SD NEGERI 2 PONCOKUSUMO Telah Dibuka! Bergabunglah bersama kami membentuk generasi cerdas, mandiri, dan berkarakter mulia.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a id="ppdbLinkWaBtn" href="#" target="_blank" class="px-6 py-3.5 bg-white text-teal-800 font-bold rounded-xl shadow hover:bg-teal-50 transition flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-emerald-600 text-lg"></i> Daftar via WhatsApp
+                            </a>
+                            <a id="ppdbLinkDriveBtn" href="#" target="_blank" class="px-6 py-3.5 bg-teal-500 text-white font-bold rounded-xl shadow hover:bg-teal-600 border border-teal-400 transition flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-lg"></i> Download Formulir PPDB
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                        <h3 class="text-xl font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check text-teal-600"></i> Syarat Pendaftaran
+                        </h3>
+                        <ul id="ppdbSyaratList" class="space-y-3 text-sm text-gray-700 list-disc list-inside leading-relaxed">
+                            <li>Usia minimal 6 Tahun pada bulan Juli 2027.</li>
+                            <li>Fotokopi Akta Kelahiran (2 lembar).</li>
+                            <li>Fotokopi Kartu Keluarga / KK (2 lembar).</li>
+                            <li>Fotokopi KTP Orang Tua / Wali.</li>
+                            <li>Pas Foto calon siswa ukuran 3x4 (3 lembar).</li>
+                            <li>Ijazah TK/RA (Jika ada).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                        <h3 class="text-xl font-bold text-gray-900 border-b pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-teal-600"></i> Jadwal Pelaksanaan PPDB
+                        </h3>
+                        <div id="ppdbJadwalText" class="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                            • GELOMBANG I: 02 Januari 2027 - 31 Maret 2027
+                            • GELOMBANG II: 01 April 2027 - 30 Juni 2027
+                            • Daftar Ulang: 01 - 05 Juli 2027
+                            • Hari Pertama Masuk Sekolah: 12 Juli 2027
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: BERITA -->
+        <section id="section-berita" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Berita & Pengumuman</h2>
+                    <p class="text-gray-500 mt-2">Kabar dan Informasi Seputar Kegiatan Sekolah</p>
+                </div>
+
+                <div id="fullBeritaContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Dynamic Items -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: GALERI -->
+        <section id="section-galeri" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Galeri Foto</h2>
+                    <p class="text-gray-500 mt-2">Dokumentasi Momen & Aktivitas Siswa</p>
+                </div>
+
+                <div id="publicGaleriContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- Dynamic Images -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: KONTAK -->
+        <section id="section-kontak" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900">Hubungi Kami</h2>
+                    <p class="text-gray-500 mt-2">Informasi Alamat & Kontak Resmi Sekolah</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 font-bold">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Alamat Sekolah</h4>
+                                <p id="publicAlamat" class="text-gray-600 text-sm mt-1">-</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 font-bold">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Nomor Telepon / WA</h4>
+                                <p id="publicTelepon" class="text-gray-600 text-sm mt-1">-</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 font-bold">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Email Resmi</h4>
+                                <p id="publicEmail" class="text-gray-600 text-sm mt-1">-</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-gray-100">
+                            <h4 class="font-bold text-gray-900 mb-3">Media Sosial Kami</h4>
+                            <div class="flex items-center space-x-3" id="kontakSosmedContainer">
+                                <!-- Loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-200 rounded-2xl overflow-hidden min-h-[250px] relative flex items-center justify-center border border-gray-300">
+                        <div class="text-center p-6">
+                            <i class="fa-solid fa-map-location-dot text-4xl text-gray-400 mb-2"></i>
+                            <p class="font-medium text-gray-600">Peta Lokasi Sekolah</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ADMIN DASHBOARD (CMS) -->
+        <section id="section-admin" class="page-section hidden bg-gray-100 py-8 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Admin Header -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Mode Admin</span>
+                            <h2 class="text-2xl font-bold text-gray-900">Dashboard Panel Kelola Website</h2>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Upload file foto langsung dari HP/Laptop atau tempelkan link URL gambar secara langsung.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="showSection('beranda')" class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition">
+                            <i class="fa-solid fa-globe mr-1"></i> Lihat Tampilan Publik
+                        </button>
+                        <button onclick="logoutAdmin()" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-sm transition">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar (Logout)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BANTUAN GENERATOR GOOGLE DRIVE LINK TOOL -->
+                <div class="bg-teal-900 text-white p-5 rounded-2xl mb-8 shadow-md">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-brands fa-google-drive text-amber-400 text-xl"></i>
+                        <h3 class="font-bold text-base">Alat Bantu Gambar Google Drive</h3>
+                    </div>
+                    <p class="text-xs text-teal-200 mb-3 leading-relaxed">
+                        Agar gambar dari Google Drive dapat tampil langsung pada website, pastikan file di Drive diatur ke <b>"Siapa saja yang memiliki link" (Public)</b>, lalu masukkan link share Drive Anda di bawah ini untuk diubah otomatis:
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="driveInputUrl" class="flex-grow px-3 py-2 rounded-xl text-gray-900 text-xs focus:outline-none" placeholder="Tempelkan Link Share Google Drive di sini (Contoh: https://drive.google.com/file/d/1ABC.../view?usp=sharing)">
+                        <button onclick="convertDriveUrl()" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-teal-950 font-bold text-xs rounded-xl transition shrink-0">
+                            Konversi Link
+                        </button>
+                    </div>
+                    <div id="driveResultContainer" class="hidden mt-3 p-2.5 bg-teal-950 rounded-xl text-xs border border-teal-700 flex items-center justify-between gap-2">
+                        <span id="driveConvertedResult" class="font-mono text-amber-300 truncate"></span>
+                        <button onclick="copyConvertedDrive()" class="px-3 py-1 bg-teal-700 hover:bg-teal-600 text-white rounded font-bold shrink-0">Salin Link</button>
+                    </div>
+                </div>
+
+                <!-- Admin Tabs -->
+                <div class="flex space-x-2 border-b border-gray-200 mb-6 overflow-x-auto pb-1">
+                    <button onclick="switchAdminTab('pengaturan')" id="tabBtn-pengaturan" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg bg-white border-t-2 border-teal-600 text-teal-600 shadow-sm">
+                        <i class="fa-solid fa-sliders mr-2"></i> Logo & Hero
+                    </button>
+                    <button onclick="switchAdminTab('profil')" id="tabBtn-profil" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-gray-500 hover:text-teal-600">
+                        <i class="fa-solid fa-school mr-2"></i> Profil & Sosmed
+                    </button>
+                    <button onclick="switchAdminTab('ppdb')" id="tabBtn-ppdb" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-gray-500 hover:text-teal-600">
+                        <i class="fa-solid fa-user-plus mr-2"></i> Info PPDB 2027/2028
+                    </button>
+                    <button onclick="switchAdminTab('guru')" id="tabBtn-guru" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-gray-500 hover:text-teal-600">
+                        <i class="fa-solid fa-chalkboard-user mr-2"></i> Kelola Guru
+                    </button>
+                    <button onclick="switchAdminTab('ekstra')" id="tabBtn-ekstra" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-gray-500 hover:text-teal-600">
+                        <i class="fa-solid fa-futbol mr-2"></i> Ekstrakurikuler
+                    </button>
+                    <button onclick="switchAdminTab('berita')" id="tabBtn-berita" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-gray-500 hover:text-teal-600">
+                        <i class="fa-solid fa-newspaper mr-2"></i> Berita
+                    </button>
+                    <button onclick="switchAdminTab('galeri')" id="tabBtn-galeri" class="admin-tab-btn px-4 py-2.5 text-sm font-semibold rounded-t-lg text-gray-500 hover:text-teal-600">
+                        <i class="fa-solid fa-images mr-2"></i> Galeri
+                    </button>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: LOGO, WALLPAPER & HERO -->
+                <div id="adminTab-pengaturan" class="admin-tab-content space-y-6">
+                    <form onsubmit="savePengaturanTampilan(event)" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+                        <h3 class="text-lg font-bold text-gray-800 border-b border-gray-100 pb-3"><i class="fa-solid fa-paintbrush mr-2 text-teal-600"></i> Pengaturan Logo & Wallpaper Latar</h3>
+                        
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-gray-700 uppercase">1. Pengaturan Logo Website</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload File Logo Baru (Atau Pakai Link URL)</label>
+                                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'editLogoUrl')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                                    <input type="text" id="editLogoUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL gambar di sini">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kode Class Ikon FontAwesome (Fallback)</label>
+                                    <input type="text" id="editLogoIcon" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="fa-solid fa-graduation-cap">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="border-gray-100">
+
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-gray-700 uppercase">2. Pengaturan Wallpaper / Banner Latar Beranda</h4>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload File Wallpaper Latar (Atau Pakai Link URL)</label>
+                                <input type="file" accept="image/*" onchange="handleImageUpload(event, 'editHeroWallpaper')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                                <input type="text" id="editHeroWallpaper" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL gambar di sini" required>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Label Tag Banner Atas</label>
+                                    <input type="text" id="editHeroTag" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Judul Utama Banner</label>
+                                    <input type="text" id="editHeroJudul" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Deskripsi Singkat Banner</label>
+                                <textarea id="editHeroDeskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="text-right pt-2">
+                            <button type="submit" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm rounded-lg shadow transition">
+                                <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan Tampilan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: PROFIL, INFORMASI & KONTAK -->
+                <div id="adminTab-profil" class="admin-tab-content hidden space-y-6">
+                    <form onsubmit="saveProfilForm(event)" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+                        <h3 class="text-lg font-bold text-gray-800 border-b border-gray-100 pb-3"><i class="fa-solid fa-school mr-2 text-teal-600"></i> Edit Identitas, Profil, Kontak & Sosmed</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Resmi Sekolah</label>
+                                <input type="text" id="editNamaSekolah" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Slogan / Sub-Judul Header</label>
+                                <input type="text" id="editSloganSekolah" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                        </div>
+
+                        <hr class="border-gray-100">
+
+                        <h4 class="text-sm font-bold text-gray-700 uppercase">Informasi Umum (NPSN & Akreditasi)</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">NPSN</label>
+                                <input type="text" id="editNpsn" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Status Sekolah</label>
+                                <input type="text" id="editStatusSekolah" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Akreditasi</label>
+                                <input type="text" id="editAkreditasi" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kecamatan</label>
+                                <input type="text" id="editKecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kabupaten / Kota</label>
+                                <input type="text" id="editKabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Jenjang Pendidikan</label>
+                                <input type="text" id="editJenjang" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                        </div>
+
+                        <hr class="border-gray-100">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Kepala Sekolah</label>
+                                <input type="text" id="editNamaKepsek" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload Foto Kepala Sekolah (Atau Link URL)</label>
+                                <input type="file" accept="image/*" onchange="handleImageUpload(event, 'editFotoKepsek')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                                <input type="text" id="editFotoKepsek" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL foto di sini" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Teks Sambutan Kepala Sekolah</label>
+                            <textarea id="editSambutanKepsek" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Visi Sekolah</label>
+                                <textarea id="editVisi" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Misi Sekolah</label>
+                                <textarea id="editMisi" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                            </div>
+                        </div>
+
+                        <hr class="border-gray-100">
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Alamat Lengkap</label>
+                                <input type="text" id="editAlamat" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nomor Telepon / WA</label>
+                                <input type="text" id="editTelepon" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email Sekolah</label>
+                                <input type="email" id="editEmail" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                            </div>
+                        </div>
+
+                        <hr class="border-gray-100">
+
+                        <h4 class="text-sm font-bold text-gray-700 uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-share-nodes text-teal-600"></i> Pengaturan Link Sosial Media
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Link WhatsApp</label>
+                                <input type="text" id="editWaUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Link YouTube</label>
+                                <input type="text" id="editYtUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Link Facebook</label>
+                                <input type="text" id="editFbUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Link Instagram</label>
+                                <input type="text" id="editIgUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <button type="submit" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm rounded-lg shadow transition">
+                                <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan Informasi Sekolah
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: PPDB -->
+                <div id="adminTab-ppdb" class="admin-tab-content hidden space-y-6">
+                    <form onsubmit="savePpdbForm(event)" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+                        <h3 class="text-lg font-bold text-gray-800 border-b border-gray-100 pb-3"><i class="fa-solid fa-user-plus mr-2 text-teal-600"></i> Pengaturan Informasi PPDB 2027/2028</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Link Pendaftaran WA PPDB</label>
+                                <input type="text" id="editPpdbWa" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="https://wa.me/628...">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Link Download Formulir (Google Drive / PDF)</label>
+                                <input type="text" id="editPpdbFormular" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="https://drive.google.com/file/d/...">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Jadwal Pelaksanaan PPDB</label>
+                            <textarea id="editPpdbJadwal" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Syarat Pendaftaran (Satu Syarat Per Baris)</label>
+                            <textarea id="editPpdbSyarat" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                        </div>
+
+                        <div class="text-right">
+                            <button type="submit" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm rounded-lg shadow transition">
+                                <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan Informasi PPDB
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: GURU & STAF -->
+                <div id="adminTab-guru" class="admin-tab-content hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-800">Daftar Guru & Staf Pendidik</h3>
+                        <button onclick="openModalGuru()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Tambah Guru Baru
+                        </button>
+                    </div>
+
+                    <div id="adminGuruGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Dynamic loaded -->
+                    </div>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: EKSTRAKURIKULER -->
+                <div id="adminTab-ekstra" class="admin-tab-content hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-800">Daftar Program Ekstrakurikuler</h3>
+                        <button onclick="openModalEkstra()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Tambah Ekstra Baru
+                        </button>
+                    </div>
+
+                    <div id="adminEkstraGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Dynamic loaded -->
+                    </div>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: BERITA -->
+                <div id="adminTab-berita" class="admin-tab-content hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-800">Daftar Berita & Pengumuman</h3>
+                        <button onclick="openModalBerita()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Tambah Berita Baru
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-teal-50 text-gray-600 border-b border-gray-200 font-semibold">
+                                        <th class="p-4">Foto</th>
+                                        <th class="p-4">Judul Berita</th>
+                                        <th class="p-4">Tanggal</th>
+                                        <th class="p-4">Kategori</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminBeritaTable" class="divide-y divide-gray-100">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN TAB CONTENT: GALERI FOTO -->
+                <div id="adminTab-galeri" class="admin-tab-content hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-800">Daftar Galeri Foto Aktivitas</h3>
+                        <button onclick="openModalGaleri()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Tambah Foto Baru
+                        </button>
+                    </div>
+
+                    <div id="adminGaleriGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 pt-10 pb-6 border-t-4 border-teal-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-3">
+                        <div id="publicFooterLogoContainer" class="w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center text-sm font-bold overflow-hidden shrink-0">
+                            <!-- Footer logo -->
+                        </div>
+                        <h3 id="publicNamaSekolahFooter" class="font-bold text-white text-base">SD NEGERI 2 PONCOKUSUMO</h3>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        Lembaga Pendidikan Dasar berkualitas. Membentuk karakter anak bangsa yang cerdas, berkepribadian, dan taqwa.
+                    </p>
+                    
+                    <div>
+                        <h5 class="text-xs font-bold uppercase text-teal-400 tracking-wider mb-2">Ikuti Kami</h5>
+                        <div class="flex items-center space-x-2" id="footerSosmedContainer">
+                            <!-- Loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3 border-b border-gray-800 pb-2">Navigasi Cepat</h4>
+                    <ul class="text-xs space-y-2">
+                        <li><button onclick="showSection('beranda')" class="hover:text-teal-400">Beranda</button></li>
+                        <li><button onclick="showSection('profil')" class="hover:text-teal-400">Profil Sekolah</button></li>
+                        <li><button onclick="showSection('guru')" class="hover:text-teal-400">Guru & Staf</button></li>
+                        <li><button onclick="showSection('ekstra')" class="hover:text-teal-400">Ekstrakurikuler</button></li>
+                        <li><button onclick="showSection('ppdb')" class="hover:text-teal-400 text-teal-300 font-bold">PPDB 2027/2028</button></li>
+                        <li><button onclick="showSection('berita')" class="hover:text-teal-400">Berita & Pengumuman</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-3 border-b border-gray-800 pb-2">Kontak Sekolah</h4>
+                    <p id="footerAlamat" class="text-xs text-gray-400"><i class="fa-solid fa-location-dot text-teal-500 mr-2"></i>-</p>
+                    <p id="footerEmail" class="text-xs text-gray-400 mt-2"><i class="fa-solid fa-envelope text-teal-500 mr-2"></i>-</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
+                &copy; 2026 <span id="footerCopyNama">SD NEGERI 2 PONCOKUSUMO</span>. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL LOGIN ADMIN -->
+    <div id="modalLogin" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border-t-8 border-teal-600 transform transition-all">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
+                        <i class="fa-solid fa-lock text-sm"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg">Login Admin CMS</h3>
+                </div>
+                <button onclick="closeModalLogin()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Username</label>
+                    <input type="text" id="loginUsername" class="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Masukkan Username" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Masukkan Password" required>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModalLogin()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow transition">Masuk Panel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FORM GURU -->
+    <div id="modalGuru" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalGuruTitle" class="font-bold text-gray-900 text-lg">Tambah Data Guru</h3>
+                <button onclick="closeModalGuru()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+            </div>
+            <form onsubmit="saveGuru(event)" class="space-y-4">
+                <input type="hidden" id="guruId">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap & Gelar</label>
+                    <input type="text" id="guruNama" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Jabatan / Guru Kelas</label>
+                    <input type="text" id="guruJabatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Contoh: Guru Kelas 1 / Guru PJOK" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload File Foto Profil (Atau Link URL)</label>
+                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'guruFoto')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                    <input type="text" id="guruFoto" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL foto di sini" required>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModalGuru()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow transition">Simpan Guru</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FORM EKSTRA -->
+    <div id="modalEkstra" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalEkstraTitle" class="font-bold text-gray-900 text-lg">Tambah Ekstrakurikuler</h3>
+                <button onclick="closeModalEkstra()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+            </div>
+            <form onsubmit="saveEkstra(event)" class="space-y-4">
+                <input type="hidden" id="ekstraId">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Ekstrakurikuler</label>
+                    <input type="text" id="ekstraNama" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Ikon FontAwesome / Kelas FontAwesome</label>
+                    <input type="text" id="ekstraIkon" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="fa-solid fa-campground" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload File Banner Gambar (Atau Link URL)</label>
+                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'ekstraGambar')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                    <input type="text" id="ekstraGambar" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL gambar di sini" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Deskripsi Singkat</label>
+                    <textarea id="ekstraDeskripsi" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModalEkstra()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow transition">Simpan Ekstra</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FORM BERITA -->
+    <div id="modalBerita" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalBeritaTitle" class="font-bold text-gray-900 text-lg">Tambah Berita Baru</h3>
+                <button onclick="closeModalBerita()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+            </div>
+            <form onsubmit="saveBerita(event)" class="space-y-4">
+                <input type="hidden" id="beritaId">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Judul Berita</label>
+                    <input type="text" id="beritaJudul" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tanggal</label>
+                        <input type="date" id="beritaTanggal" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kategori</label>
+                        <select id="beritaKategori" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            <option value="Kegiatan Sekolah">Kegiatan Sekolah</option>
+                            <option value="Pengumuman">Pengumuman</option>
+                            <option value="Prestasi">Prestasi</option>
+                            <option value="Ekstrakurikuler">Ekstrakurikuler</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload File Gambar Header (Atau Link URL)</label>
+                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'beritaGambar')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                    <input type="text" id="beritaGambar" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL gambar di sini" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Ringkasan Singkat</label>
+                    <textarea id="beritaRingkasan" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Isi Berita Lengkap</label>
+                    <textarea id="beritaIsi" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModalBerita()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow transition">Simpan Berita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DETAIL BERITA -->
+    <div id="modalReadBerita" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <span id="readBeritaKategori" class="px-2.5 py-1 bg-teal-100 text-teal-800 text-xs font-bold rounded-full"></span>
+                <button onclick="closeModalReadBerita()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            </div>
+            <h2 id="readBeritaJudul" class="text-2xl font-extrabold text-gray-900 mb-2"></h2>
+            <p id="readBeritaTanggal" class="text-xs text-gray-400 mb-4"></p>
+            <img id="readBeritaGambar" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" src="" alt="Detail Berita">
+            <div id="readBeritaIsi" class="text-gray-700 text-sm leading-relaxed whitespace-pre-line space-y-3"></div>
+            <div class="mt-6 pt-4 border-t border-gray-100 text-right">
+                <button onclick="closeModalReadBerita()" class="px-5 py-2 bg-gray-200 text-gray-700 font-semibold text-sm rounded-lg hover:bg-gray-300">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FORM GALERI -->
+    <div id="modalGaleri" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalGaleriTitle" class="font-bold text-gray-900 text-lg">Tambah Foto Galeri</h3>
+                <button onclick="closeModalGaleri()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+            </div>
+            <form onsubmit="saveGaleri(event)" class="space-y-4">
+                <input type="hidden" id="galeriId">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Judul Foto</label>
+                    <input type="text" id="galeriJudul" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Upload File Foto (Atau Link URL)</label>
+                    <input type="file" accept="image/*" onchange="handleImageUpload(event, 'galeriUrl')" class="block w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 mb-2">
+                    <input type="text" id="galeriUrl" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Atau tempel Link URL gambar di sini" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kategori Activity</label>
+                    <input type="text" id="galeriKategori" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Contoh: Upacara, Pramuka">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModalGaleri()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Batal</button>
+                    <button type="submit" class="px-5 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow transition">Simpan Foto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        const defaultGuru = [
+            { id: '1', nama: 'Siti Rahmah, S.Pd., M.Pd.', jabatan: 'Kepala Sekolah', foto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80' },
+            { id: '2', nama: 'Ahmad Fauzi, S.Pd.', jabatan: 'Guru Kelas 6', foto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80' },
+            { id: '3', nama: 'Dewi Lestari, S.Pd.', jabatan: 'Guru Kelas 1', foto: 'https://images.unsplash.com/photo-1580894732413-a70d2a840b12?auto=format&fit=crop&w=400&q=80' },
+            { id: '4', nama: 'Budi Santoso, S.Pd.SD', jabatan: 'Guru PJOK & Olahraga', foto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' }
+        ];
+
+        const defaultEkstra = [
+            { id: '1', nama: 'Pramuka Penggalang', ikon: 'fa-solid fa-campground', gambar: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80', deskripsi: 'Membentuk kedisiplinan, kemandirian, kepemimpinan, dan cinta alam.' },
+            { id: '2', nama: 'Seni Tari Tradisional', ikon: 'fa-solid fa-masks-theater', gambar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80', deskripsi: 'Melestarikan budaya daerah serta mengasah keindahan gerak dan kepekaan seni.' },
+            { id: '3', nama: 'Seni Baca Al-Qur\'an (BTQ)', ikon: 'fa-solid fa-book-quran', gambar: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&w=600&q=80', deskripsi: 'Membina kemampuan membaca Al-Qur\'an dengan fasih dan berakhlak mulia.' }
+        ];
+
+        const defaultPpdb = {
+            waUrl: 'https://wa.me/6281234567890?text=Halo%20Panitia%20PPDB%20SDN%202%20Poncokusumo,%20saya%20ingin%20mendaftar%20siswa%20baru%20TA%202027/2028',
+            formularUrl: 'https://drive.google.com',
+            jadwal: '• GELOMBANG I: 02 Januari 2027 - 31 Maret 2027\n• GELOMBANG II: 01 April 2027 - 30 Juni 2027\n• Daftar Ulang: 01 - 05 Juli 2027\n• Hari Pertama Masuk Sekolah: 12 Juli 2027',
+            syarat: 'Usia minimal 6 Tahun pada bulan Juli 2027.\nFotokopi Akta Kelahiran (2 lembar).\nFotokopi Kartu Keluarga / KK (2 lembar).\nFotokopi KTP Orang Tua / Wali.\nPas Foto calon siswa ukuran 3x4 (3 lembar).\nIjazah TK/RA (Jika ada).'
+        };
+
+        const defaultBerita = [
+            {
+                id: '1',
+                judul: 'SDN 2 Poncokusumo Raih Juara Lomba Pramuka Tingkat Kecamatan',
+                tanggal: '2026-03-15',
+                kategori: 'Prestasi',
+                gambar: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
+                ringkasan: 'Regu Pramuka SDN 2 Poncokusumo berhasil memborong piala dalam kegiatan Perkemahan Sabtu-Minggu.',
+                isi: 'Poncokusumo - Regu Pramuka Penggalang SD NEGERI 2 PONCOKUSUMO menunjukkan keunggulannya pada ajang perkemahan dan lomba ketangkasan pramuka yang diselenggarakan tingkat Kecamatan Poncokusumo.\n\nKepala Sekolah mengungkapkan rasa bangga atas perjuangan gigih para siswa dan guru pendamping.'
+            }
+        ];
+
+        const defaultGaleri = [
+            { id: '1', judul: 'Upacara Bendera Hari Senin', url: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80', kategori: 'Upacara' },
+            { id: '2', judul: 'Kegiatan Pembelajaran Luar Kelas', url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80', kategori: 'Belajar' }
+        ];
+
+        const defaultProfil = {
+            namaSekolah: 'SD NEGERI 2 PONCOKUSUMO',
+            sloganSekolah: 'Cerdas, Berkarakter, & Berbudaya',
+            npsn: '20518000',
+            statusSekolah: 'Negeri',
+            akreditasi: 'A (Sangat Baik)',
+            kecamatan: 'Poncokusumo',
+            kabupaten: 'Malang, Jawa Timur',
+            jenjang: 'Sekolah Dasar (SD)',
+            namaKepsek: 'Siti Rahmah, S.Pd., M.Pd.',
+            fotoKepsek: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+            sambutanKepsek: 'Assalamu’alaikum Warahmatullahi Wabarakatuh.\n\nSelamat datang di website resmi SD NEGERI 2 PONCOKUSUMO. Kami berkomitmen untuk menyajikan pendidikan berkualitas tinggi, membentuk pribadi mulia, kreatif, dan mandiri bagi setiap peserta didik.',
+            visi: 'Mewujudkan Peserta Didik yang Berakhlak Mulia, Cerdas, Terampil, dan Berwawasan Lingkungan.',
+            misi: '1. Menanamkan nilai-nilai keagamaan dan budi pekerti luhur.\n2. Melaksanakan pembelajaran aktif, kreatif, dan menyenangkan.\n3. Mengembangkan potensi bakat dan minat siswa melalui kegiatan ekstrakurikuler.',
+            alamat: 'Jl. Raya Poncokusumo No. 45, Kecamatan Poncokusumo, Kabupaten Malang, Jawa Timur 65157',
+            telepon: '0812-3456-7890 / (0341) 888999',
+            email: 'sdn2poncokusumo@malangkab.go.id',
+            waUrl: 'https://wa.me/6281234567890',
+            ytUrl: 'https://youtube.com/@sdn2poncokusumo',
+            fbUrl: 'https://facebook.com/sdn2poncokusumo',
+            igUrl: 'https://instagram.com/sdn2poncokusumo'
+        };
+
+        const defaultPengaturan = {
+            logoUrl: '',
+            logoIcon: 'fa-solid fa-graduation-cap',
+            heroWallpaper: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1600&q=80',
+            heroTag: 'Selamat Datang di Portal Resmi',
+            heroJudul: 'SD NEGERI 2 PONCOKUSUMO',
+            heroDeskripsi: 'Mewujudkan generasi penerus bangsa yang unggul dalam prestasi, berkarakter mulia, serta berwawasan lingkungan.'
+        };
+
+        let state = {
+            isLoggedIn: false,
+            berita: JSON.parse(localStorage.getItem('sdn2_berita')) || defaultBerita,
+            galeri: JSON.parse(localStorage.getItem('sdn2_galeri')) || defaultGaleri,
+            guru: JSON.parse(localStorage.getItem('sdn2_guru')) || defaultGuru,
+            ekstra: JSON.parse(localStorage.getItem('sdn2_ekstra')) || defaultEkstra,
+            ppdb: JSON.parse(localStorage.getItem('sdn2_ppdb')) || defaultPpdb,
+            profil: JSON.parse(localStorage.getItem('sdn2_profil')) || defaultProfil,
+            pengaturan: JSON.parse(localStorage.getItem('sdn2_pengaturan')) || defaultPengaturan
+        };
+
+        // HELPER: KONVERSI GAMBAR KE BASE64 DENGAN RE-COMPRESSION
+        function handleImageUpload(event, targetInputId) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 800;
+                    const MAX_HEIGHT = 800;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    document.getElementById(targetInputId).value = dataUrl;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveDataToStorage() {
+            localStorage.setItem('sdn2_berita', JSON.stringify(state.berita));
+            localStorage.setItem('sdn2_galeri', JSON.stringify(state.galeri));
+            localStorage.setItem('sdn2_guru', JSON.stringify(state.guru));
+            localStorage.setItem('sdn2_ekstra', JSON.stringify(state.ekstra));
+            localStorage.setItem('sdn2_ppdb', JSON.stringify(state.ppdb));
+            localStorage.setItem('sdn2_profil', JSON.stringify(state.profil));
+            localStorage.setItem('sdn2_pengaturan', JSON.stringify(state.pengaturan));
+            renderAll();
+        }
+
+        // TOOL GOOGLE DRIVE CONVERTER
+        function convertDriveUrl() {
+            const raw = document.getElementById('driveInputUrl').value.trim();
+            const container = document.getElementById('driveResultContainer');
+            const resultSpan = document.getElementById('driveConvertedResult');
+
+            if (!raw) {
+                alert('Silakan tempelkan link Google Drive terlebih dahulu.');
+                return;
+            }
+
+            const match = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+                const converted = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                resultSpan.innerText = converted;
+                container.classList.remove('hidden');
+            } else {
+                alert('Link Google Drive tidak valid! Pastikan link memiliki format https://drive.google.com/file/d/ID_FILE/view');
+            }
+        }
+
+        function copyConvertedDrive() {
+            const text = document.getElementById('driveConvertedResult').innerText;
+            navigator.clipboard.writeText(text);
+            alert('Link berhasil disalin! Anda bisa langsung menempelkannya (Paste) ke kolom link gambar.');
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById('section-' + sectionId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+        function updateAuthButtons() {
+            const desktopNav = document.getElementById('authNavButton');
+            const mobileNav = document.getElementById('authNavButtonMobile');
+
+            if (state.isLoggedIn) {
+                desktopNav.innerHTML = `
+                    <button onclick="showSection('admin')" class="px-3.5 py-1.5 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-gauge"></i> Panel Admin
+                    </button>
+                `;
+                mobileNav.innerHTML = `
+                    <button onclick="showSection('admin'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 bg-teal-600 text-white font-semibold rounded-md">
+                        <i class="fa-solid fa-gauge mr-2"></i> Panel Admin CMS
+                    </button>
+                `;
+            } else {
+                desktopNav.innerHTML = `
+                    <button onclick="openModalLogin()" class="px-3.5 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login Admin
+                    </button>
+                `;
+                mobileNav.innerHTML = `
+                    <button onclick="openModalLogin(); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 font-semibold rounded-md">
+                        <i class="fa-solid fa-right-to-bracket mr-2"></i> Login Admin
+                    </button>
+                `;
+            }
+        }
+
+        function openModalLogin() { document.getElementById('modalLogin').classList.remove('hidden'); }
+        function closeModalLogin() { document.getElementById('modalLogin').classList.add('hidden'); }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUsername').value;
+            const p = document.getElementById('loginPassword').value;
+
+            if (u === 'esridupo' && p === 'esridupo123') {
+                state.isLoggedIn = true;
+                closeModalLogin();
+                updateAuthButtons();
+                showSection('admin');
+            } else {
+                alert('Username atau Password salah!');
+            }
+        }
+
+        function logoutAdmin() {
+            state.isLoggedIn = false;
+            updateAuthButtons();
+            showSection('beranda');
+        }
+
+        function generateSosmedHtml(sizeClass = "w-8 h-8 text-sm") {
+            let html = '';
+            const list = [
+                { key: 'waUrl', icon: 'fa-brands fa-whatsapp', bg: 'bg-emerald-500 hover:bg-emerald-600', title: 'WhatsApp' },
+                { key: 'ytUrl', icon: 'fa-brands fa-youtube', bg: 'bg-red-600 hover:bg-red-700', title: 'YouTube' },
+                { key: 'fbUrl', icon: 'fa-brands fa-facebook-f', bg: 'bg-blue-600 hover:bg-blue-700', title: 'Facebook' },
+                { key: 'igUrl', icon: 'fa-brands fa-instagram', bg: 'bg-pink-600 hover:bg-pink-700', title: 'Instagram' }
+            ];
+
+            list.forEach(item => {
+                const url = state.profil[item.key];
+                if (url && url.trim() !== '') {
+                    html += `
+                        <a href="${url}" target="_blank" title="${item.title}" class="${sizeClass} rounded-full ${item.bg} text-white flex items-center justify-center shadow transition transform hover:-translate-y-0.5">
+                            <i class="${item.icon}"></i>
+                        </a>
+                    `;
+                }
+            });
+
+            return html || '<span class="text-xs text-gray-400">Belum ada sosmed.</span>';
+        }
+
+        function renderPublic() {
+            document.title = `${state.profil.namaSekolah} - Website Resmi & CMS Admin`;
+            document.getElementById('publicNamaSekolahHeader').innerText = state.profil.namaSekolah;
+            document.getElementById('publicSloganHeader').innerText = state.profil.sloganSekolah;
+            document.getElementById('publicNamaSekolahFooter').innerText = state.profil.namaSekolah;
+            document.getElementById('footerCopyNama').innerText = state.profil.namaSekolah;
+
+            const logoHtml = state.pengaturan.logoUrl 
+                ? `<img src="${state.pengaturan.logoUrl}" alt="Logo" class="w-full h-full object-cover">`
+                : `<i class="${state.pengaturan.logoIcon || 'fa-solid fa-graduation-cap'}"></i>`;
+            
+            document.getElementById('publicLogoContainer').innerHTML = logoHtml;
+            document.getElementById('publicFooterLogoContainer').innerHTML = logoHtml;
+
+            const heroBanner = document.getElementById('heroBanner');
+            if (state.pengaturan.heroWallpaper) {
+                heroBanner.style.backgroundImage = `url('${state.pengaturan.heroWallpaper}')`;
+            }
+            document.getElementById('publicHeroTag').innerText = state.pengaturan.heroTag;
+            document.getElementById('publicHeroJudul').innerText = state.pengaturan.heroJudul;
+            document.getElementById('publicHeroDeskripsi').innerText = state.pengaturan.heroDeskripsi;
+
+            document.getElementById('publicNamaKepsek').innerText = state.profil.namaKepsek;
+            document.getElementById('publicFotoKepsek').src = state.profil.fotoKepsek;
+            document.getElementById('publicSambutanKepsek').innerText = state.profil.sambutanKepsek;
+            document.getElementById('publicVisi').innerText = state.profil.visi;
+            document.getElementById('publicMisi').innerText = state.profil.misi;
+            document.getElementById('publicAlamat').innerText = state.profil.alamat;
+            document.getElementById('publicTelepon').innerText = state.profil.telepon;
+            document.getElementById('publicEmail').innerText = state.profil.email;
+
+            document.getElementById('publicNpsn').innerText = state.profil.npsn;
+            document.getElementById('publicStatusSekolah').innerText = state.profil.statusSekolah;
+            document.getElementById('publicAkreditasi').innerText = state.profil.akreditasi;
+            document.getElementById('publicKecamatan').innerText = state.profil.kecamatan;
+            document.getElementById('publicKabupaten').innerText = state.profil.kabupaten;
+            document.getElementById('publicJenjang').innerText = state.profil.jenjang;
+
+            document.getElementById('footerAlamat').innerHTML = `<i class="fa-solid fa-location-dot text-teal-500 mr-2"></i>${state.profil.alamat}`;
+            document.getElementById('footerEmail').innerHTML = `<i class="fa-solid fa-envelope text-teal-500 mr-2"></i>${state.profil.email}`;
+
+            document.getElementById('footerSosmedContainer').innerHTML = generateSosmedHtml('w-8 h-8 text-sm');
+            document.getElementById('kontakSosmedContainer').innerHTML = generateSosmedHtml('w-10 h-10 text-base');
+
+            // Render PPDB Public
+            document.getElementById('ppdbLinkWaBtn').href = state.ppdb.waUrl || '#';
+            document.getElementById('ppdbLinkDriveBtn').href = state.ppdb.formularUrl || '#';
+            document.getElementById('ppdbJadwalText').innerText = state.ppdb.jadwal;
+            
+            const listSyarat = state.ppdb.syarat.split('\n').filter(s => s.trim() !== '');
+            document.getElementById('ppdbSyaratList').innerHTML = listSyarat.map(s => `<li>${s}</li>`).join('');
+
+            // Render Guru Public
+            document.getElementById('publicGuruGrid').innerHTML = state.guru.map(g => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 text-center p-5">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 border-4 border-teal-500 shadow-inner">
+                        <img src="${g.foto}" alt="${g.nama}" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-base">${g.nama}</h4>
+                    <p class="text-xs text-teal-600 font-semibold mt-1">${g.jabatan}</p>
+                </div>
+            `).join('') || '<p class="text-gray-500 col-span-4 text-center">Belum ada data guru.</p>';
+
+            // Render Ekstra Public
+            document.getElementById('publicEkstraGrid').innerHTML = state.ekstra.map(e => `
+                <div class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm flex flex-col h-full">
+                    <div class="h-48 relative overflow-hidden bg-teal-900">
+                        <img src="${e.gambar}" alt="${e.nama}" class="w-full h-full object-cover opacity-80">
+                        <div class="absolute top-4 left-4 w-10 h-10 bg-teal-600 text-white rounded-xl flex items-center justify-center text-lg shadow">
+                            <i class="${e.ikon || 'fa-solid fa-star'}"></i>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">${e.nama}</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">${e.deskripsi}</p>
+                    </div>
+                </div>
+            `).join('') || '<p class="text-gray-500 col-span-3 text-center">Belum ada data ekstrakurikuler.</p>';
+
+            // Render Berita
+            const newsCardHtml = (b) => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-teal-100 hover:shadow-md transition flex flex-col h-full">
+                    <img src="${b.gambar}" alt="${b.judul}" class="w-full h-48 object-cover">
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-2">
+                            <span><i class="fa-regular fa-calendar mr-1"></i>${b.tanggal}</span>
+                            <span class="px-2 py-0.5 bg-teal-100 text-teal-800 rounded-full font-bold">${b.kategori}</span>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-base mb-2 line-clamp-2">${b.judul}</h3>
+                        <p class="text-gray-600 text-xs line-clamp-3 mb-4 leading-relaxed">${b.ringkasan}</p>
+                        <button onclick="readBeritaDetail('${b.id}')" class="mt-auto text-teal-600 hover:text-teal-700 font-bold text-xs flex items-center gap-1">
+                            Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('homeBeritaContainer').innerHTML = state.berita.slice(0, 3).map(newsCardHtml).join('') || '<p class="text-gray-500 col-span-3 text-center">Belum ada berita.</p>';
+            document.getElementById('fullBeritaContainer').innerHTML = state.berita.map(newsCardHtml).join('') || '<p class="text-gray-500 col-span-3 text-center">Belum ada berita.</p>';
+
+            // Render Galeri
+            document.getElementById('publicGaleriContainer').innerHTML = state.galeri.map(g => `
+                <div class="group relative rounded-xl overflow-hidden shadow-sm bg-gray-100 border border-gray-200">
+                    <img src="${g.url}" alt="${g.judul}" class="w-full h-52 object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                        <span class="text-[10px] uppercase font-bold text-teal-300 tracking-wider">${g.kategori || 'Aktivitas'}</span>
+                        <p class="font-bold text-sm leading-tight">${g.judul}</p>
+                    </div>
+                </div>
+            `).join('') || '<p class="text-gray-500 col-span-4 text-center">Belum ada foto galeri.</p>';
+        }
+
+        function renderAdmin() {
+            // Fill Form Pengaturan Tampilan
+            document.getElementById('editLogoUrl').value = state.pengaturan.logoUrl || '';
+            document.getElementById('editLogoIcon').value = state.pengaturan.logoIcon || '';
+            document.getElementById('editHeroWallpaper').value = state.pengaturan.heroWallpaper || '';
+            document.getElementById('editHeroTag').value = state.pengaturan.heroTag || '';
+            document.getElementById('editHeroJudul').value = state.pengaturan.heroJudul || '';
+            document.getElementById('editHeroDeskripsi').value = state.pengaturan.heroDeskripsi || '';
+
+            // Fill Form Profil
+            document.getElementById('editNamaSekolah').value = state.profil.namaSekolah;
+            document.getElementById('editSloganSekolah').value = state.profil.sloganSekolah;
+            document.getElementById('editNpsn').value = state.profil.npsn;
+            document.getElementById('editStatusSekolah').value = state.profil.statusSekolah;
+            document.getElementById('editAkreditasi').value = state.profil.akreditasi;
+            document.getElementById('editKecamatan').value = state.profil.kecamatan;
+            document.getElementById('editKabupaten').value = state.profil.kabupaten;
+            document.getElementById('editJenjang').value = state.profil.jenjang;
+
+            document.getElementById('editNamaKepsek').value = state.profil.namaKepsek;
+            document.getElementById('editFotoKepsek').value = state.profil.fotoKepsek;
+            document.getElementById('editSambutanKepsek').value = state.profil.sambutanKepsek;
+            document.getElementById('editVisi').value = state.profil.visi;
+            document.getElementById('editMisi').value = state.profil.misi;
+            document.getElementById('editAlamat').value = state.profil.alamat;
+            document.getElementById('editTelepon').value = state.profil.telepon;
+            document.getElementById('editEmail').value = state.profil.email;
+
+            document.getElementById('editWaUrl').value = state.profil.waUrl || '';
+            document.getElementById('editYtUrl').value = state.profil.ytUrl || '';
+            document.getElementById('editFbUrl').value = state.profil.fbUrl || '';
+            document.getElementById('editIgUrl').value = state.profil.igUrl || '';
+
+            // Fill Form PPDB
+            document.getElementById('editPpdbWa').value = state.ppdb.waUrl || '';
+            document.getElementById('editPpdbFormular').value = state.ppdb.formularUrl || '';
+            document.getElementById('editPpdbJadwal').value = state.ppdb.jadwal || '';
+            document.getElementById('editPpdbSyarat').value = state.ppdb.syarat || '';
+
+            // Render Admin Guru
+            document.getElementById('adminGuruGrid').innerHTML = state.guru.map(g => `
+                <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between">
+                    <div>
+                        <img src="${g.foto}" alt="${g.nama}" class="w-20 h-20 rounded-full mx-auto object-cover mb-3 border-2 border-teal-500">
+                        <h4 class="font-bold text-gray-800 text-sm">${g.nama}</h4>
+                        <p class="text-xs text-teal-600 font-medium mb-3">${g.jabatan}</p>
+                    </div>
+                    <div class="flex justify-center space-x-2 pt-2 border-t border-gray-100">
+                        <button onclick="editGuru('${g.id}')" class="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteGuru('${g.id}')" class="p-1.5 bg-red-600 text-white rounded-lg text-xs hover:bg-red-700"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Admin Ekstra
+            document.getElementById('adminEkstraGrid').innerHTML = state.ekstra.map(e => `
+                <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <img src="${e.gambar}" alt="${e.nama}" class="w-full h-32 object-cover rounded-lg mb-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            <i class="${e.ikon || 'fa-solid fa-star'} text-teal-600"></i>
+                            <h4 class="font-bold text-gray-800 text-sm">${e.nama}</h4>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2 mb-3">${e.deskripsi}</p>
+                    </div>
+                    <div class="flex justify-end space-x-2 pt-2 border-t border-gray-100">
+                        <button onclick="editEkstra('${e.id}')" class="px-3 py-1 bg-amber-500 text-white rounded-lg text-xs font-semibold hover:bg-amber-600"><i class="fa-solid fa-pen-to-square mr-1"></i> Edit</button>
+                        <button onclick="deleteEkstra('${e.id}')" class="px-3 py-1 bg-red-600 text-white rounded-lg text-xs font-semibold hover:bg-red-700"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Admin Berita Table
+            document.getElementById('adminBeritaTable').innerHTML = state.berita.map(b => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3"><img src="${b.gambar}" class="w-12 h-12 object-cover rounded-lg"></td>
+                    <td class="p-3 font-semibold text-gray-800">${b.judul}</td>
+                    <td class="p-3 text-xs text-gray-500">${b.tanggal}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 bg-teal-100 text-teal-800 text-xs font-bold rounded-full">${b.kategori}</span></td>
+                    <td class="p-3 text-center">
+                        <button onclick="editBerita('${b.id}')" class="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteBerita('${b.id}')" class="p-1.5 bg-red-600 text-white rounded-lg text-xs hover:bg-red-700"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Admin Galeri
+            document.getElementById('adminGaleriGrid').innerHTML = state.galeri.map(g => `
+                <div class="bg-white rounded-xl p-3 border border-gray-200 shadow-sm">
+                    <img src="${g.url}" alt="${g.judul}" class="w-full h-36 object-cover rounded-lg mb-2">
+                    <h5 class="font-bold text-xs text-gray-800 truncate">${g.judul}</h5>
+                    <p class="text-[10px] text-teal-600 font-semibold mb-2">${g.kategori || 'Umum'}</p>
+                    <div class="flex justify-end space-x-1">
+                        <button onclick="deleteGaleri('${g.id}')" class="w-full py-1 bg-red-600 text-white rounded text-xs font-semibold hover:bg-red-700"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAll() {
+            renderPublic();
+            renderAdmin();
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'border-t-2', 'border-teal-600', 'text-teal-600', 'shadow-sm');
+                btn.classList.add('text-gray-500');
+            });
+
+            document.getElementById('adminTab-' + tabName).classList.remove('hidden');
+            const activeBtn = document.getElementById('tabBtn-' + tabName);
+            activeBtn.classList.add('bg-white', 'border-t-2', 'border-teal-600', 'text-teal-600', 'shadow-sm');
+            activeBtn.classList.remove('text-gray-500');
+        }
+
+        function savePengaturanTampilan(e) {
+            e.preventDefault();
+            state.pengaturan.logoUrl = document.getElementById('editLogoUrl').value.trim();
+            state.pengaturan.logoIcon = document.getElementById('editLogoIcon').value.trim();
+            state.pengaturan.heroWallpaper = document.getElementById('editHeroWallpaper').value.trim();
+            state.pengaturan.heroTag = document.getElementById('editHeroTag').value.trim();
+            state.pengaturan.heroJudul = document.getElementById('editHeroJudul').value.trim();
+            state.pengaturan.heroDeskripsi = document.getElementById('editHeroDeskripsi').value.trim();
+            
+            saveDataToStorage();
+            alert('Pengaturan Logo & Wallpaper berhasil disimpan!');
+        }
+
+        function saveProfilForm(e) {
+            e.preventDefault();
+            state.profil.namaSekolah = document.getElementById('editNamaSekolah').value;
+            state.profil.sloganSekolah = document.getElementById('editSloganSekolah').value;
+            state.profil.npsn = document.getElementById('editNpsn').value;
+            state.profil.statusSekolah = document.getElementById('editStatusSekolah').value;
+            state.profil.akreditasi = document.getElementById('editAkreditasi').value;
+            state.profil.kecamatan = document.getElementById('editKecamatan').value;
+            state.profil.kabupaten = document.getElementById('editKabupaten').value;
+            state.profil.jenjang = document.getElementById('editJenjang').value;
+
+            state.profil.namaKepsek = document.getElementById('editNamaKepsek').value;
+            state.profil.fotoKepsek = document.getElementById('editFotoKepsek').value;
+            state.profil.sambutanKepsek = document.getElementById('editSambutanKepsek').value;
+            state.profil.visi = document.getElementById('editVisi').value;
+            state.profil.misi = document.getElementById('editMisi').value;
+            state.profil.alamat = document.getElementById('editAlamat').value;
+            state.profil.telepon = document.getElementById('editTelepon').value;
+            state.profil.email = document.getElementById('editEmail').value;
+
+            state.profil.waUrl = document.getElementById('editWaUrl').value;
+            state.profil.ytUrl = document.getElementById('editYtUrl').value;
+            state.profil.fbUrl = document.getElementById('editFbUrl').value;
+            state.profil.igUrl = document.getElementById('editIgUrl').value;
+
+            saveDataToStorage();
+            alert('Profil sekolah dan informasi sosmed berhasil diperbarui!');
+        }
+
+        function savePpdbForm(e) {
+            e.preventDefault();
+            state.ppdb.waUrl = document.getElementById('editPpdbWa').value;
+            state.ppdb.formularUrl = document.getElementById('editPpdbFormular').value;
+            state.ppdb.jadwal = document.getElementById('editPpdbJadwal').value;
+            state.ppdb.syarat = document.getElementById('editPpdbSyarat').value;
+
+            saveDataToStorage();
+            alert('Informasi PPDB berhasil diperbarui!');
+        }
+
+        // CRUD GURU
+        function openModalGuru(id = null) {
+            if (id) {
+                const g = state.guru.find(item => item.id === id);
+                document.getElementById('guruId').value = g.id;
+                document.getElementById('guruNama').value = g.nama;
+                document.getElementById('guruJabatan').value = g.jabatan;
+                document.getElementById('guruFoto').value = g.foto;
+                document.getElementById('modalGuruTitle').innerText = 'Edit Data Guru';
+            } else {
+                document.getElementById('guruId').value = '';
+                document.getElementById('guruNama').value = '';
+                document.getElementById('guruJabatan').value = '';
+                document.getElementById('guruFoto').value = '';
+                document.getElementById('modalGuruTitle').innerText = 'Tambah Data Guru Baru';
+            }
+            document.getElementById('modalGuru').classList.remove('hidden');
+        }
+        function closeModalGuru() { document.getElementById('modalGuru').classList.add('hidden'); }
+
+        function saveGuru(e) {
+            e.preventDefault();
+            const id = document.getElementById('guruId').value;
+            const nama = document.getElementById('guruNama').value;
+            const jabatan = document.getElementById('guruJabatan').value;
+            const foto = document.getElementById('guruFoto').value;
+
+            if (id) {
+                const idx = state.guru.findIndex(g => g.id === id);
+                if (idx !== -1) state.guru[idx] = { id, nama, jabatan, foto };
+            } else {
+                state.guru.push({ id: Date.now().toString(), nama, jabatan, foto });
+            }
+
+            saveDataToStorage();
+            closeModalGuru();
+        }
+
+        function editGuru(id) { openModalGuru(id); }
+        function deleteGuru(id) {
+            if (confirm('Yakin ingin menghapus guru ini?')) {
+                state.guru = state.guru.filter(g => g.id !== id);
+                saveDataToStorage();
+            }
+        }
+
+        // CRUD EKSTRA
+        function openModalEkstra(id = null) {
+            if (id) {
+                const e = state.ekstra.find(item => item.id === id);
+                document.getElementById('ekstraId').value = e.id;
+                document.getElementById('ekstraNama').value = e.nama;
+                document.getElementById('ekstraIkon').value = e.ikon;
+                document.getElementById('ekstraGambar').value = e.gambar;
+                document.getElementById('ekstraDeskripsi').value = e.deskripsi;
+                document.getElementById('modalEkstraTitle').innerText = 'Edit Ekstrakurikuler';
+            } else {
+                document.getElementById('ekstraId').value = '';
+                document.getElementById('ekstraNama').value = '';
+                document.getElementById('ekstraIkon').value = 'fa-solid fa-star';
+                document.getElementById('ekstraGambar').value = '';
+                document.getElementById('ekstraDeskripsi').value = '';
+                document.getElementById('modalEkstraTitle').innerText = 'Tambah Ekstrakurikuler Baru';
+            }
+            document.getElementById('modalEkstra').classList.remove('hidden');
+        }
+        function closeModalEkstra() { document.getElementById('modalEkstra').classList.add('hidden'); }
+
+        function saveEkstra(e) {
+            e.preventDefault();
+            const id = document.getElementById('ekstraId').value;
+            const nama = document.getElementById('ekstraNama').value;
+            const ikon = document.getElementById('ekstraIkon').value;
+            const gambar = document.getElementById('ekstraGambar').value;
+            const deskripsi = document.getElementById('ekstraDeskripsi').value;
+
+            if (id) {
+                const idx = state.ekstra.findIndex(item => item.id === id);
+                if (idx !== -1) state.ekstra[idx] = { id, nama, ikon, gambar, deskripsi };
+            } else {
+                state.ekstra.push({ id: Date.now().toString(), nama, ikon, gambar, deskripsi });
+            }
+
+            saveDataToStorage();
+            closeModalEkstra();
+        }
+
+        function editEkstra(id) { openModalEkstra(id); }
+        function deleteEkstra(id) {
+            if (confirm('Yakin menghapus ekstrakurikuler ini?')) {
+                state.ekstra = state.ekstra.filter(e => e.id !== id);
+                saveDataToStorage();
+            }
+        }
+
+        // CRUD BERITA
+        function openModalBerita(id = null) {
+            if (id) {
+                const b = state.berita.find(item => item.id === id);
+                document.getElementById('beritaId').value = b.id;
+                document.getElementById('beritaJudul').value = b.judul;
+                document.getElementById('beritaTanggal').value = b.tanggal;
+                document.getElementById('beritaKategori').value = b.kategori;
+                document.getElementById('beritaGambar').value = b.gambar;
+                document.getElementById('beritaRingkasan').value = b.ringkasan;
+                document.getElementById('beritaIsi').value = b.isi;
+                document.getElementById('modalBeritaTitle').innerText = 'Edit Berita';
+            } else {
+                document.getElementById('beritaId').value = '';
+                document.getElementById('beritaJudul').value = '';
+                document.getElementById('beritaTanggal').value = new Date().toISOString().split('T')[0];
+                document.getElementById('beritaKategori').value = 'Kegiatan Sekolah';
+                document.getElementById('beritaGambar').value = '';
+                document.getElementById('beritaRingkasan').value = '';
+                document.getElementById('beritaIsi').value = '';
+                document.getElementById('modalBeritaTitle').innerText = 'Tambah Berita Baru';
+            }
+            document.getElementById('modalBerita').classList.remove('hidden');
+        }
+        function closeModalBerita() { document.getElementById('modalBerita').classList.add('hidden'); }
+
+        function saveBerita(e) {
+            e.preventDefault();
+            const id = document.getElementById('beritaId').value;
+            const judul = document.getElementById('beritaJudul').value;
+            const tanggal = document.getElementById('beritaTanggal').value;
+            const kategori = document.getElementById('beritaKategori').value;
+            const gambar = document.getElementById('beritaGambar').value;
+            const ringkasan = document.getElementById('beritaRingkasan').value;
+            const isi = document.getElementById('beritaIsi').value;
+
+            if (id) {
+                const idx = state.berita.findIndex(b => b.id === id);
+                if (idx !== -1) state.berita[idx] = { id, judul, tanggal, kategori, gambar, ringkasan, isi };
+            } else {
+                state.berita.unshift({ id: Date.now().toString(), judul, tanggal, kategori, gambar, ringkasan, isi });
+            }
+
+            saveDataToStorage();
+            closeModalBerita();
+        }
+
+        function editBerita(id) { openModalBerita(id); }
+        function deleteBerita(id) {
+            if (confirm('Hapus berita ini?')) {
+                state.berita = state.berita.filter(b => b.id !== id);
+                saveDataToStorage();
+            }
+        }
+
+        function readBeritaDetail(id) {
+            const b = state.berita.find(item => item.id === id);
+            if (!b) return;
+
+            document.getElementById('readBeritaKategori').innerText = b.kategori;
+            document.getElementById('readBeritaJudul').innerText = b.judul;
+            document.getElementById('readBeritaTanggal').innerText = 'Dipublikasikan pada: ' + b.tanggal;
+            document.getElementById('readBeritaGambar').src = b.gambar;
+            document.getElementById('readBeritaIsi').innerText = b.isi;
+
+            document.getElementById('modalReadBerita').classList.remove('hidden');
+        }
+        function closeModalReadBerita() { document.getElementById('modalReadBerita').classList.add('hidden'); }
+
+        // CRUD GALERI
+        function openModalGaleri() {
+            document.getElementById('galeriId').value = '';
+            document.getElementById('galeriJudul').value = '';
+            document.getElementById('galeriUrl').value = '';
+            document.getElementById('galeriKategori').value = '';
+            document.getElementById('modalGaleri').classList.remove('hidden');
+        }
+        function closeModalGaleri() { document.getElementById('modalGaleri').classList.add('hidden'); }
+
+        function saveGaleri(e) {
+            e.preventDefault();
+            const judul = document.getElementById('galeriJudul').value;
+            const url = document.getElementById('galeriUrl').value;
+            const kategori = document.getElementById('galeriKategori').value || 'Aktivitas';
+
+            state.galeri.unshift({ id: Date.now().toString(), judul, url, kategori });
+            saveDataToStorage();
+            closeModalGaleri();
+        }
+
+        function deleteGaleri(id) {
+            if (confirm('Hapus foto dari galeri?')) {
+                state.galeri = state.galeri.filter(g => g.id !== id);
+                saveDataToStorage();
+            }
+        }
+
+        // INITIAL LOAD
+        updateAuthButtons();
+        renderAll();
+    </script>
+</body>
+</html>
