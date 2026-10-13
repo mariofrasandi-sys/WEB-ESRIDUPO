@@ -45,7 +45,7 @@
 
                 <!-- Mobile Menu Button -->
                 <div class="lg:hidden flex items-center">
-                    <button id="mobileMenuBtn" class="text-gray-600 hover:text-teal-600 p-2 text-xl focus:outline-none">
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="text-gray-600 hover:text-teal-600 p-2 text-xl focus:outline-none">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
@@ -633,7 +633,7 @@
                 <div id="adminTab-guru" class="admin-tab-content hidden space-y-6">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-gray-800">Daftar Guru & Staf Pendidik</h3>
-                        <button onclick="openModalGuru()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                        <button type="button" onclick="openModalGuru()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> Tambah Guru Baru
                         </button>
                     </div>
@@ -647,7 +647,7 @@
                 <div id="adminTab-ekstra" class="admin-tab-content hidden space-y-6">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-gray-800">Daftar Program Ekstrakurikuler</h3>
-                        <button onclick="openModalEkstra()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                        <button type="button" onclick="openModalEkstra()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> Tambah Ekstra Baru
                         </button>
                     </div>
@@ -661,7 +661,7 @@
                 <div id="adminTab-berita" class="admin-tab-content hidden space-y-6">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-gray-800">Daftar Berita & Pengumuman</h3>
-                        <button onclick="openModalBerita()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                        <button type="button" onclick="openModalBerita()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> Tambah Berita Baru
                         </button>
                     </div>
@@ -690,7 +690,7 @@
                 <div id="adminTab-galeri" class="admin-tab-content hidden space-y-6">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-bold text-gray-800">Daftar Galeri Foto Aktivitas</h3>
-                        <button onclick="openModalGaleri()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                        <button type="button" onclick="openModalGaleri()" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> Tambah Foto Baru
                         </button>
                     </div>
@@ -753,7 +753,7 @@
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100">
             <div class="flex justify-between items-center mb-4">
                 <h3 id="modalGuruTitle" class="font-bold text-gray-900 text-lg">Tambah Data Guru</h3>
-                <button onclick="closeModalGuru()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+                <button type="button" onclick="closeModalGuru()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
             </div>
             <form onsubmit="saveGuru(event)" class="space-y-4">
                 <input type="hidden" id="guruId">
@@ -783,7 +783,7 @@
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100">
             <div class="flex justify-between items-center mb-4">
                 <h3 id="modalEkstraTitle" class="font-bold text-gray-900 text-lg">Tambah Ekstrakurikuler</h3>
-                <button onclick="closeModalEkstra()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+                <button type="button" onclick="closeModalEkstra()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
             </div>
             <form onsubmit="saveEkstra(event)" class="space-y-4">
                 <input type="hidden" id="ekstraId">
@@ -817,7 +817,7 @@
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
                 <h3 id="modalBeritaTitle" class="font-bold text-gray-900 text-lg">Tambah Berita Baru</h3>
-                <button onclick="closeModalBerita()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+                <button type="button" onclick="closeModalBerita()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
             </div>
             <form onsubmit="saveBerita(event)" class="space-y-4">
                 <input type="hidden" id="beritaId">
@@ -866,14 +866,14 @@
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
                 <span id="readBeritaKategori" class="px-2.5 py-1 bg-teal-100 text-teal-800 text-xs font-bold rounded-full"></span>
-                <button onclick="closeModalReadBerita()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+                <button type="button" onclick="closeModalReadBerita()" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
             </div>
             <h2 id="readBeritaJudul" class="text-2xl font-extrabold text-gray-900 mb-2"></h2>
             <p id="readBeritaTanggal" class="text-xs text-gray-400 mb-4"></p>
             <img id="readBeritaGambar" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" src="" alt="Detail Berita">
             <div id="readBeritaIsi" class="text-gray-700 text-sm leading-relaxed whitespace-pre-line space-y-3"></div>
             <div class="mt-6 pt-4 border-t border-gray-100 text-right">
-                <button onclick="closeModalReadBerita()" class="px-5 py-2 bg-gray-200 text-gray-700 font-semibold text-sm rounded-lg hover:bg-gray-300">Tutup</button>
+                <button type="button" onclick="closeModalReadBerita()" class="px-5 py-2 bg-gray-200 text-gray-700 font-semibold text-sm rounded-lg hover:bg-gray-300">Tutup</button>
             </div>
         </div>
     </div>
@@ -883,7 +883,7 @@
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100">
             <div class="flex justify-between items-center mb-4">
                 <h3 id="modalGaleriTitle" class="font-bold text-gray-900 text-lg">Tambah Foto Galeri</h3>
-                <button onclick="closeModalGaleri()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+                <button type="button" onclick="closeModalGaleri()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
             </div>
             <form onsubmit="saveGaleri(event)" class="space-y-4">
                 <input type="hidden" id="galeriId">
@@ -914,15 +914,17 @@
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // ==========================================
-        // MASUKKAN KONFIGURASI FIREBASE ANDA DI SINI
+        // KONFIGURASI FIREBASE ANDA (SUDAH DIPASANG)
         // ==========================================
         const firebaseConfig = {
-            apiKey: "ISI_API_KEY_ANDA",
-            authDomain: "ISI_PROJECT_ID.firebaseapp.com",
-            projectId: "ISI_PROJECT_ID",
-            storageBucket: "ISI_PROJECT_ID.appspot.com",
-            messagingSenderId: "ISI_MESSAGING_SENDER_ID",
-            appId: "ISI_APP_ID"
+            apiKey: "AIzaSyBiQNeSmt_LzeOVU2Nm37uGP5uIh-qJ2ds",
+            authDomain: "web-esridupo.firebaseapp.com",
+            databaseURL: "https://web-esridupo-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "web-esridupo",
+            storageBucket: "web-esridupo.firebasestorage.app",
+            messagingSenderId: "12037246404",
+            appId: "1:12037246404:web:349c6f8e6bb88c2126e891",
+            measurementId: "G-8GR8Z9BRH5"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -1045,11 +1047,11 @@
                 if (showAlert) alert('Data berhasil disimpan ke Firebase!');
             } catch (error) {
                 console.error("Gagal menyimpan ke Firebase:", error);
-                alert('Gagal menyimpan! Periksa konfigurasi Firebase Anda.');
+                alert('Gagal menyimpan! Periksa koneksi atau aturan Firestore Anda.');
             }
         }
 
-        // Ekspose semua fungsi ke window agar dapat diakses onclick/onsubmit di HTML
+        // Ekspose fungsi ke window
         window.handleImageUpload = function(event, targetInputId) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1428,7 +1430,7 @@
                         </div>
                         <h3 class="font-bold text-gray-900 text-base mb-2 line-clamp-2">${b.judul}</h3>
                         <p class="text-gray-600 text-xs line-clamp-3 mb-4 leading-relaxed">${b.ringkasan}</p>
-                        <button onclick="readBeritaDetail('${b.id}')" class="mt-auto text-teal-600 hover:text-teal-700 font-bold text-xs flex items-center gap-1">
+                        <button type="button" onclick="readBeritaDetail('${b.id}')" class="mt-auto text-teal-600 hover:text-teal-700 font-bold text-xs flex items-center gap-1">
                             Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
@@ -1493,8 +1495,8 @@
                         <p class="text-xs text-teal-600 font-medium mb-3">${g.jabatan}</p>
                     </div>
                     <div class="flex justify-center space-x-2 pt-2 border-t border-gray-100">
-                        <button onclick="editGuru('${g.id}')" class="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteGuru('${g.id}')" class="p-1.5 bg-red-600 text-white rounded-lg text-xs hover:bg-red-700"><i class="fa-solid fa-trash"></i></button>
+                        <button type="button" onclick="editGuru('${g.id}')" class="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" onclick="deleteGuru('${g.id}')" class="p-1.5 bg-red-600 text-white rounded-lg text-xs hover:bg-red-700"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             `).join('');
@@ -1510,8 +1512,8 @@
                         <p class="text-xs text-gray-500 line-clamp-2 mb-3">${e.deskripsi}</p>
                     </div>
                     <div class="flex justify-end space-x-2 pt-2 border-t border-gray-100">
-                        <button onclick="editEkstra('${e.id}')" class="px-3 py-1 bg-amber-500 text-white rounded-lg text-xs font-semibold hover:bg-amber-600"><i class="fa-solid fa-pen-to-square mr-1"></i> Edit</button>
-                        <button onclick="deleteEkstra('${e.id}')" class="px-3 py-1 bg-red-600 text-white rounded-lg text-xs font-semibold hover:bg-red-700"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                        <button type="button" onclick="editEkstra('${e.id}')" class="px-3 py-1 bg-amber-500 text-white rounded-lg text-xs font-semibold hover:bg-amber-600"><i class="fa-solid fa-pen-to-square mr-1"></i> Edit</button>
+                        <button type="button" onclick="deleteEkstra('${e.id}')" class="px-3 py-1 bg-red-600 text-white rounded-lg text-xs font-semibold hover:bg-red-700"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
                     </div>
                 </div>
             `).join('');
@@ -1523,8 +1525,8 @@
                     <td class="p-3 text-xs text-gray-500">${b.tanggal}</td>
                     <td class="p-3"><span class="px-2 py-0.5 bg-teal-100 text-teal-800 text-xs font-bold rounded-full">${b.kategori}</span></td>
                     <td class="p-3 text-center">
-                        <button onclick="editBerita('${b.id}')" class="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteBerita('${b.id}')" class="p-1.5 bg-red-600 text-white rounded-lg text-xs hover:bg-red-700"><i class="fa-solid fa-trash"></i></button>
+                        <button type="button" onclick="editBerita('${b.id}')" class="p-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600 mr-1"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" onclick="deleteBerita('${b.id}')" class="p-1.5 bg-red-600 text-white rounded-lg text-xs hover:bg-red-700"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -1535,7 +1537,7 @@
                     <h5 class="font-bold text-xs text-gray-800 truncate">${g.judul}</h5>
                     <p class="text-[10px] text-teal-600 font-semibold mb-2">${g.kategori || 'Umum'}</p>
                     <div class="flex justify-end space-x-1">
-                        <button onclick="deleteGaleri('${g.id}')" class="w-full py-1 bg-red-600 text-white rounded text-xs font-semibold hover:bg-red-700"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                        <button type="button" onclick="deleteGaleri('${g.id}')" class="w-full py-1 bg-red-600 text-white rounded text-xs font-semibold hover:bg-red-700"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
                     </div>
                 </div>
             `).join('');
