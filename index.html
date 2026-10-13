@@ -908,13 +908,13 @@
         </div>
     </div>
 
-    <!-- FIREBASE SDK (MODULAR v10) -->
+    <!-- FIREBASE & LOGIKA APLIKASI -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // ==========================================
-        // GANTI DENGAN KODE FIREBASE CONFIG ANDA
+        // MASUKKAN KONFIGURASI FIREBASE ANDA DI SINI
         // ==========================================
         const firebaseConfig = {
             apiKey: "ISI_API_KEY_ANDA",
@@ -1007,7 +1007,6 @@
             pengaturan: defaultPengaturan
         };
 
-        // FUNGSI LOAD DATA DARI FIREBASE FIRESTORE
         async function loadDataFromFirebase() {
             try {
                 const docRef = doc(db, "sekolahData", "config");
@@ -1022,8 +1021,7 @@
                     state.profil = data.profil || defaultProfil;
                     state.pengaturan = data.pengaturan || defaultPengaturan;
                 } else {
-                    // Jika belum ada di firebase, buat dokumen awal
-                    await saveDataToFirebase();
+                    await saveDataToFirebase(false);
                 }
                 renderAll();
             } catch (error) {
@@ -1032,8 +1030,7 @@
             }
         }
 
-        // FUNGSI SIMPAN DATA KE FIREBASE FIRESTORE
-        async function saveDataToFirebase() {
+        async function saveDataToFirebase(showAlert = true) {
             try {
                 await setDoc(doc(db, "sekolahData", "config"), {
                     berita: state.berita,
@@ -1045,15 +1042,14 @@
                     pengaturan: state.pengaturan
                 });
                 renderAll();
-                alert('Data berhasil disimpan secara online ke Firebase!');
+                if (showAlert) alert('Data berhasil disimpan ke Firebase!');
             } catch (error) {
                 console.error("Gagal menyimpan ke Firebase:", error);
-                alert('Terjadi kesalahan saat menyimpan data ke Firebase.');
+                alert('Gagal menyimpan! Periksa konfigurasi Firebase Anda.');
             }
         }
 
-        // Ekspose fungsi global agar bisa dipanggil elemen HTML
-        window.saveDataToStorage = saveDataToFirebase;
+        // Ekspose semua fungsi ke window agar dapat diakses onclick/onsubmit di HTML
         window.handleImageUpload = function(event, targetInputId) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1135,7 +1131,7 @@
             state.pengaturan.heroTag = document.getElementById('editHeroTag').value.trim();
             state.pengaturan.heroJudul = document.getElementById('editHeroJudul').value.trim();
             state.pengaturan.heroDeskripsi = document.getElementById('editHeroDeskripsi').value.trim();
-            saveDataToFirebase();
+            saveDataToFirebase(true);
         };
 
         window.saveProfilForm = function(e) {
@@ -1160,7 +1156,7 @@
             state.profil.ytUrl = document.getElementById('editYtUrl').value;
             state.profil.fbUrl = document.getElementById('editFbUrl').value;
             state.profil.igUrl = document.getElementById('editIgUrl').value;
-            saveDataToFirebase();
+            saveDataToFirebase(true);
         };
 
         window.savePpdbForm = function(e) {
@@ -1169,7 +1165,7 @@
             state.ppdb.formularUrl = document.getElementById('editPpdbFormular').value;
             state.ppdb.jadwal = document.getElementById('editPpdbJadwal').value;
             state.ppdb.syarat = document.getElementById('editPpdbSyarat').value;
-            saveDataToFirebase();
+            saveDataToFirebase(true);
         };
 
         // CRUD Guru
@@ -1203,14 +1199,14 @@
             } else {
                 state.guru.push({ id: Date.now().toString(), nama, jabatan, foto });
             }
-            saveDataToFirebase();
+            saveDataToFirebase(true);
             closeModalGuru();
         };
         window.editGuru = function(id) { openModalGuru(id); };
         window.deleteGuru = function(id) {
             if (confirm('Yakin ingin menghapus guru ini?')) {
                 state.guru = state.guru.filter(g => g.id !== id);
-                saveDataToFirebase();
+                saveDataToFirebase(true);
             }
         };
 
@@ -1248,14 +1244,14 @@
             } else {
                 state.ekstra.push({ id: Date.now().toString(), nama, ikon, gambar, deskripsi });
             }
-            saveDataToFirebase();
+            saveDataToFirebase(true);
             closeModalEkstra();
         };
         window.editEkstra = function(id) { openModalEkstra(id); };
         window.deleteEkstra = function(id) {
             if (confirm('Yakin menghapus ekstrakurikuler ini?')) {
                 state.ekstra = state.ekstra.filter(e => e.id !== id);
-                saveDataToFirebase();
+                saveDataToFirebase(true);
             }
         };
 
@@ -1299,14 +1295,14 @@
             } else {
                 state.berita.unshift({ id: Date.now().toString(), judul, tanggal, kategori, gambar, ringkasan, isi });
             }
-            saveDataToFirebase();
+            saveDataToFirebase(true);
             closeModalBerita();
         };
         window.editBerita = function(id) { openModalBerita(id); };
         window.deleteBerita = function(id) {
             if (confirm('Hapus berita ini?')) {
                 state.berita = state.berita.filter(b => b.id !== id);
-                saveDataToFirebase();
+                saveDataToFirebase(true);
             }
         };
         window.readBeritaDetail = function(id) {
@@ -1336,13 +1332,13 @@
             const url = document.getElementById('galeriUrl').value;
             const kategori = document.getElementById('galeriKategori').value || 'Aktivitas';
             state.galeri.unshift({ id: Date.now().toString(), judul, url, kategori });
-            saveDataToFirebase();
+            saveDataToFirebase(true);
             closeModalGaleri();
         };
         window.deleteGaleri = function(id) {
             if (confirm('Hapus foto dari galeri?')) {
                 state.galeri = state.galeri.filter(g => g.id !== id);
-                saveDataToFirebase();
+                saveDataToFirebase(true);
             }
         };
 
@@ -1567,7 +1563,6 @@
             return html || '<span class="text-xs text-gray-400">Belum ada sosmed.</span>';
         }
 
-        // Routing Hash URL
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.replace('#', '') || 'beranda';
             if (document.getElementById('section-' + hash)) {
@@ -1575,7 +1570,6 @@
             }
         });
 
-        // Load awal saat halaman dibuka
         const initialHash = window.location.hash.replace('#', '') || 'beranda';
         if (document.getElementById('section-' + initialHash)) {
             navigateRoute(initialHash);
@@ -1583,7 +1577,7 @@
             navigateRoute('beranda');
         }
 
-        // Ambil data pertama kali dari Firebase Firestore
+        // Muat data dari Firebase saat halaman dibuka
         loadDataFromFirebase();
     </script>
 </body>
