@@ -21,7 +21,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <!-- Logo & Name Dynamic -->
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('beranda')">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateRoute('beranda')">
                     <div id="publicLogoContainer" class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center text-2xl font-bold shadow-md overflow-hidden shrink-0">
                         <!-- Loaded dynamically -->
                     </div>
@@ -33,22 +33,25 @@
 
                 <!-- Desktop Navigation Menu -->
                 <nav class="hidden lg:flex space-x-1 items-center font-medium text-sm">
-                    <button onclick="showSection('beranda')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Beranda</button>
-                    <button onclick="showSection('profil')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Profil</button>
-                    <button onclick="showSection('guru')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Guru & Staf</button>
-                    <button onclick="showSection('ekstra')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Ekstrakurikuler</button>
-                    <button onclick="showSection('ppdb')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition font-bold text-teal-700 bg-teal-50">PPDB 2027/2028</button>
-                    <button onclick="showSection('berita')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Berita</button>
-                    <button onclick="showSection('galeri')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Galeri</button>
-                    <button onclick="showSection('kontak')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Kontak</button>
+                    <button onclick="navigateRoute('beranda')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Beranda</button>
+                    <button onclick="navigateRoute('profil')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Profil</button>
+                    <button onclick="navigateRoute('guru')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Guru & Staf</button>
+                    <button onclick="navigateRoute('ekstra')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Ekstrakurikuler</button>
+                    <button onclick="navigateRoute('ppdb')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition font-bold text-teal-700 bg-teal-50">PPDB 2027/2028</button>
+                    <button onclick="navigateRoute('berita')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Berita</button>
+                    <button onclick="navigateRoute('galeri')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Galeri</button>
+                    <button onclick="navigateRoute('kontak')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Kontak</button>
                     
-                    <span id="authNavButton">
-                        <!-- Switchable by JS -->
-                    </span>
+                    <a href="#admin" onclick="navigateRoute('admin')" class="ml-2 px-3.5 py-1.5 bg-teal-700 text-white rounded-lg text-xs font-bold hover:bg-teal-800 transition flex items-center gap-1.5 shadow">
+                        <i class="fa-solid fa-gauge"></i> Admin Panel
+                    </a>
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <div class="lg:hidden flex items-center">
+                <div class="lg:hidden flex items-center space-x-2">
+                    <a href="#admin" onclick="navigateRoute('admin'); toggleMobileMenu()" class="px-2.5 py-1.5 bg-teal-700 text-white rounded-md text-xs font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-gauge"></i> Admin
+                    </a>
                     <button id="mobileMenuBtn" class="text-gray-600 hover:text-teal-600 p-2 text-xl focus:outline-none">
                         <i class="fa-solid fa-bars"></i>
                     </button>
@@ -58,17 +61,14 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2 font-medium">
-            <button onclick="showSection('beranda'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Beranda</button>
-            <button onclick="showSection('profil'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Profil</button>
-            <button onclick="showSection('guru'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Guru & Staf</button>
-            <button onclick="showSection('ekstra'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Ekstrakurikuler</button>
-            <button onclick="showSection('ppdb'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md bg-teal-50 text-teal-700 font-bold">PPDB 2027/2028</button>
-            <button onclick="showSection('berita'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Berita</button>
-            <button onclick="showSection('galeri'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Galeri Foto</button>
-            <button onclick="showSection('kontak'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Kontak</button>
-            <div id="authNavButtonMobile" class="pt-2 border-t border-gray-100">
-                <!-- Switchable by JS -->
-            </div>
+            <button onclick="navigateRoute('beranda'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Beranda</button>
+            <button onclick="navigateRoute('profil'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Profil</button>
+            <button onclick="navigateRoute('guru'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Guru & Staf</button>
+            <button onclick="navigateRoute('ekstra'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Ekstrakurikuler</button>
+            <button onclick="navigateRoute('ppdb'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md bg-teal-50 text-teal-700 font-bold">PPDB 2027/2028</button>
+            <button onclick="navigateRoute('berita'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Berita</button>
+            <button onclick="navigateRoute('galeri'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Galeri Foto</button>
+            <button onclick="navigateRoute('kontak'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-teal-50 hover:text-teal-600">Kontak</button>
         </div>
     </header>
 
@@ -84,10 +84,10 @@
                     <h2 id="publicHeroJudul" class="text-3xl sm:text-5xl font-black tracking-tight mb-4 leading-tight drop-shadow-md">SD NEGERI 2 PONCOKUSUMO</h2>
                     <p id="publicHeroDeskripsi" class="text-lg sm:text-xl text-teal-100 max-w-3xl mx-auto mb-8 font-light">Mewujudkan generasi penerus bangsa yang unggul dalam prestasi, berkarakter mulia, serta berwawasan lingkungan.</p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <button onclick="showSection('ppdb')" class="px-6 py-3 bg-teal-500 text-white font-bold rounded-xl shadow-lg hover:bg-teal-600 transition transform hover:-translate-y-0.5 border border-teal-400">
+                        <button onclick="navigateRoute('ppdb')" class="px-6 py-3 bg-teal-500 text-white font-bold rounded-xl shadow-lg hover:bg-teal-600 transition transform hover:-translate-y-0.5 border border-teal-400">
                             <i class="fa-solid fa-user-plus mr-2"></i> Info PPDB 2027/2028
                         </button>
-                        <button onclick="showSection('profil')" class="px-6 py-3 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl shadow-lg hover:bg-white/20 border border-white/20 transition">
+                        <button onclick="navigateRoute('profil')" class="px-6 py-3 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl shadow-lg hover:bg-white/20 border border-white/20 transition">
                             <i class="fa-solid fa-school mr-2"></i> Jelajahi Profil
                         </button>
                     </div>
@@ -124,7 +124,7 @@
                             <h2 class="text-2xl font-bold text-gray-900">Berita & Pengumuman Terbaru</h2>
                             <p class="text-sm text-gray-500">Informasi kegiatan dan agenda terbaru sekolah</p>
                         </div>
-                        <button onclick="showSection('berita')" class="text-teal-600 font-bold hover:underline text-sm hidden sm:block">Lihat Semua Berita &rarr;</button>
+                        <button onclick="navigateRoute('berita')" class="text-teal-600 font-bold hover:underline text-sm hidden sm:block">Lihat Semua Berita &rarr;</button>
                     </div>
 
                     <div id="homeBeritaContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -359,24 +359,21 @@
             </div>
         </section>
 
-        <!-- SECTION: ADMIN DASHBOARD (CMS) -->
+        <!-- SECTION: ADMIN PANEL (LANGSUNG DIAKSES VIA URL /admin) -->
         <section id="section-admin" class="page-section hidden bg-gray-100 py-8 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Admin Header -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8 flex flex-wrap justify-between items-center gap-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Mode Admin</span>
-                            <h2 class="text-2xl font-bold text-gray-900">Dashboard Panel Kelola Website</h2>
+                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Direct Admin Panel</span>
+                            <h2 class="text-2xl font-bold text-gray-900">www.esridupo.my.id/admin</h2>
                         </div>
-                        <p class="text-xs text-gray-500 mt-1">Upload file foto langsung dari HP/Laptop atau tempelkan link URL gambar secara langsung.</p>
+                        <p class="text-xs text-gray-500 mt-1">Kelola konten website secara langsung tanpa memerlukan halaman login terpisah.</p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <button onclick="showSection('beranda')" class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition">
+                        <button onclick="navigateRoute('beranda')" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow transition">
                             <i class="fa-solid fa-globe mr-1"></i> Lihat Tampilan Publik
-                        </button>
-                        <button onclick="logoutAdmin()" class="px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-sm transition">
-                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar (Logout)
                         </button>
                     </div>
                 </div>
@@ -738,12 +735,13 @@
                 <div>
                     <h4 class="font-bold text-white text-sm mb-3 border-b border-gray-800 pb-2">Navigasi Cepat</h4>
                     <ul class="text-xs space-y-2">
-                        <li><button onclick="showSection('beranda')" class="hover:text-teal-400">Beranda</button></li>
-                        <li><button onclick="showSection('profil')" class="hover:text-teal-400">Profil Sekolah</button></li>
-                        <li><button onclick="showSection('guru')" class="hover:text-teal-400">Guru & Staf</button></li>
-                        <li><button onclick="showSection('ekstra')" class="hover:text-teal-400">Ekstrakurikuler</button></li>
-                        <li><button onclick="showSection('ppdb')" class="hover:text-teal-400 text-teal-300 font-bold">PPDB 2027/2028</button></li>
-                        <li><button onclick="showSection('berita')" class="hover:text-teal-400">Berita & Pengumuman</button></li>
+                        <li><button onclick="navigateRoute('beranda')" class="hover:text-teal-400">Beranda</button></li>
+                        <li><button onclick="navigateRoute('profil')" class="hover:text-teal-400">Profil Sekolah</button></li>
+                        <li><button onclick="navigateRoute('guru')" class="hover:text-teal-400">Guru & Staf</button></li>
+                        <li><button onclick="navigateRoute('ekstra')" class="hover:text-teal-400">Ekstrakurikuler</button></li>
+                        <li><button onclick="navigateRoute('ppdb')" class="hover:text-teal-400 text-teal-300 font-bold">PPDB 2027/2028</button></li>
+                        <li><button onclick="navigateRoute('berita')" class="hover:text-teal-400">Berita & Pengumuman</button></li>
+                        <li><a href="#admin" onclick="navigateRoute('admin')" class="hover:text-teal-400 text-amber-400 font-bold">Admin Panel</a></li>
                     </ul>
                 </div>
                 <div>
@@ -753,41 +751,10 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
-                &copy; 2026 <span id="footerCopyNama">SD NEGERI 2 PONCOKUSUMO</span>. All rights reserved.
+                &copy; 2026 <span id="footerCopyNama">SD NEGERI 2 PONCOKUSUMO</span>. All rights reserved. | <a href="#admin" onclick="navigateRoute('admin')" class="text-teal-400 hover:underline">www.esridupo.my.id/admin</a>
             </div>
         </div>
     </footer>
-
-    <!-- MODAL LOGIN ADMIN -->
-    <div id="modalLogin" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border-t-8 border-teal-600 transform transition-all">
-            <div class="flex justify-between items-center mb-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
-                        <i class="fa-solid fa-lock text-sm"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-900 text-lg">Login Admin CMS</h3>
-                </div>
-                <button onclick="closeModalLogin()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
-            </div>
-
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Username</label>
-                    <input type="text" id="loginUsername" class="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Masukkan Username" required>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
-                    <input type="password" id="loginPassword" class="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Masukkan Password" required>
-                </div>
-
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModalLogin()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg font-semibold">Batal</button>
-                    <button type="submit" class="px-5 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow transition">Masuk Panel</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- MODAL FORM GURU -->
     <div id="modalGuru" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -1021,7 +988,6 @@
         };
 
         let state = {
-            isLoggedIn: false,
             berita: JSON.parse(localStorage.getItem('sdn2_berita')) || defaultBerita,
             galeri: JSON.parse(localStorage.getItem('sdn2_galeri')) || defaultGaleri,
             guru: JSON.parse(localStorage.getItem('sdn2_guru')) || defaultGuru,
@@ -1109,73 +1075,29 @@
             alert('Link berhasil disalin! Anda bisa langsung menempelkannya (Paste) ke kolom link gambar.');
         }
 
-        function showSection(sectionId) {
+        function navigateRoute(sectionId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('hidden'));
             const target = document.getElementById('section-' + sectionId);
             if (target) {
                 target.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.location.hash = sectionId;
             }
         }
+
+        // Tangani perubahan Hash URL agar akses langsung www.esridupo.my.id/#admin atau /admin berfungsi mulus
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '') || 'beranda';
+            if (document.getElementById('section-' + hash)) {
+                navigateRoute(hash);
+            }
+        });
 
         function toggleMobileMenu() {
             document.getElementById('mobileMenu').classList.toggle('hidden');
         }
 
         document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
-
-        function updateAuthButtons() {
-            const desktopNav = document.getElementById('authNavButton');
-            const mobileNav = document.getElementById('authNavButtonMobile');
-
-            if (state.isLoggedIn) {
-                desktopNav.innerHTML = `
-                    <button onclick="showSection('admin')" class="px-3.5 py-1.5 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 shadow transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-gauge"></i> Panel Admin
-                    </button>
-                `;
-                mobileNav.innerHTML = `
-                    <button onclick="showSection('admin'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 bg-teal-600 text-white font-semibold rounded-md">
-                        <i class="fa-solid fa-gauge mr-2"></i> Panel Admin CMS
-                    </button>
-                `;
-            } else {
-                desktopNav.innerHTML = `
-                    <button onclick="openModalLogin()" class="px-3.5 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-right-to-bracket"></i> Login Admin
-                    </button>
-                `;
-                mobileNav.innerHTML = `
-                    <button onclick="openModalLogin(); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 font-semibold rounded-md">
-                        <i class="fa-solid fa-right-to-bracket mr-2"></i> Login Admin
-                    </button>
-                `;
-            }
-        }
-
-        function openModalLogin() { document.getElementById('modalLogin').classList.remove('hidden'); }
-        function closeModalLogin() { document.getElementById('modalLogin').classList.add('hidden'); }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('loginUsername').value;
-            const p = document.getElementById('loginPassword').value;
-
-            if (u === 'esridupo' && p === 'esridupo123') {
-                state.isLoggedIn = true;
-                closeModalLogin();
-                updateAuthButtons();
-                showSection('admin');
-            } else {
-                alert('Username atau Password salah!');
-            }
-        }
-
-        function logoutAdmin() {
-            state.isLoggedIn = false;
-            updateAuthButtons();
-            showSection('beranda');
-        }
 
         function generateSosmedHtml(sizeClass = "w-8 h-8 text-sm") {
             let html = '';
@@ -1674,8 +1596,14 @@
             }
         }
 
-        // INITIAL LOAD
-        updateAuthButtons();
+        // INITIAL LOAD ROUTING BERDASARKAN HASH ATAU DEFAULT
+        const initialHash = window.location.hash.replace('#', '') || 'beranda';
+        if (document.getElementById('section-' + initialHash)) {
+            navigateRoute(initialHash);
+        } else {
+            navigateRoute('beranda');
+        }
+
         renderAll();
     </script>
 </body>
