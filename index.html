@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">SD NEGERI 2 PONCOKUSUMO - Website Resmi & CMS Admin</title>
+    <title id="pageTitle">SD NEGERI 2 PONCOKUSUMO - Website Resmi</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Menu -->
+                <!-- Desktop Navigation Menu (Tanpa Tombol Admin Publik) -->
                 <nav class="hidden lg:flex space-x-1 items-center font-medium text-sm">
                     <button onclick="navigateRoute('beranda')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Beranda</button>
                     <button onclick="navigateRoute('profil')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Profil</button>
@@ -41,17 +41,10 @@
                     <button onclick="navigateRoute('berita')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Berita</button>
                     <button onclick="navigateRoute('galeri')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Galeri</button>
                     <button onclick="navigateRoute('kontak')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Kontak</button>
-                    
-                    <a href="#admin" onclick="navigateRoute('admin')" class="ml-2 px-3.5 py-1.5 bg-teal-700 text-white rounded-lg text-xs font-bold hover:bg-teal-800 transition flex items-center gap-1.5 shadow">
-                        <i class="fa-solid fa-gauge"></i> Admin Panel
-                    </a>
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <div class="lg:hidden flex items-center space-x-2">
-                    <a href="#admin" onclick="navigateRoute('admin'); toggleMobileMenu()" class="px-2.5 py-1.5 bg-teal-700 text-white rounded-md text-xs font-bold flex items-center gap-1">
-                        <i class="fa-solid fa-gauge"></i> Admin
-                    </a>
+                <div class="lg:hidden flex items-center">
                     <button id="mobileMenuBtn" class="text-gray-600 hover:text-teal-600 p-2 text-xl focus:outline-none">
                         <i class="fa-solid fa-bars"></i>
                     </button>
@@ -359,21 +352,21 @@
             </div>
         </section>
 
-        <!-- SECTION: ADMIN PANEL (LANGSUNG DIAKSES VIA URL /admin) -->
+        <!-- SECTION: ADMIN PANEL RAHASIA (DIAKSES MANUAL DENGAN MENAMBAHKAN #admin DI URL) -->
         <section id="section-admin" class="page-section hidden bg-gray-100 py-8 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Admin Header -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8 flex flex-wrap justify-between items-center gap-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Direct Admin Panel</span>
-                            <h2 class="text-2xl font-bold text-gray-900">www.esridupo.my.id/admin</h2>
+                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Panel Admin Rahasia</span>
+                            <h2 class="text-2xl font-bold text-gray-900">Dashboard Manajemen Konten</h2>
                         </div>
-                        <p class="text-xs text-gray-500 mt-1">Kelola konten website secara langsung tanpa memerlukan halaman login terpisah.</p>
+                        <p class="text-xs text-gray-500 mt-1">Halaman ini tersembunyi dari publik dan hanya dapat diakses melalui URL rahasia admin.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <button onclick="navigateRoute('beranda')" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow transition">
-                            <i class="fa-solid fa-globe mr-1"></i> Lihat Tampilan Publik
+                            <i class="fa-solid fa-globe mr-1"></i> Kembali ke Beranda Publik
                         </button>
                     </div>
                 </div>
@@ -741,7 +734,6 @@
                         <li><button onclick="navigateRoute('ekstra')" class="hover:text-teal-400">Ekstrakurikuler</button></li>
                         <li><button onclick="navigateRoute('ppdb')" class="hover:text-teal-400 text-teal-300 font-bold">PPDB 2027/2028</button></li>
                         <li><button onclick="navigateRoute('berita')" class="hover:text-teal-400">Berita & Pengumuman</button></li>
-                        <li><a href="#admin" onclick="navigateRoute('admin')" class="hover:text-teal-400 text-amber-400 font-bold">Admin Panel</a></li>
                     </ul>
                 </div>
                 <div>
@@ -751,7 +743,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
-                &copy; 2026 <span id="footerCopyNama">SD NEGERI 2 PONCOKUSUMO</span>. All rights reserved. | <a href="#admin" onclick="navigateRoute('admin')" class="text-teal-400 hover:underline">www.esridupo.my.id/admin</a>
+                &copy; 2026 <span id="footerCopyNama">SD NEGERI 2 PONCOKUSUMO</span>. All rights reserved.
             </div>
         </div>
     </footer>
@@ -1085,7 +1077,7 @@
             }
         }
 
-        // Tangani perubahan Hash URL agar akses langsung www.esridupo.my.id/#admin atau /admin berfungsi mulus
+        // Tangani perubahan Hash URL secara diam-diam (misal: mengetik manual www.esridupo.my.id/#admin)
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.replace('#', '') || 'beranda';
             if (document.getElementById('section-' + hash)) {
@@ -1123,7 +1115,7 @@
         }
 
         function renderPublic() {
-            document.title = `${state.profil.namaSekolah} - Website Resmi & CMS Admin`;
+            document.title = `${state.profil.namaSekolah} - Website Resmi`;
             document.getElementById('publicNamaSekolahHeader').innerText = state.profil.namaSekolah;
             document.getElementById('publicSloganHeader').innerText = state.profil.sloganSekolah;
             document.getElementById('publicNamaSekolahFooter').innerText = state.profil.namaSekolah;
