@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <!-- Desktop Navigation Menu (Tanpa Tombol Admin Publik) -->
+                <!-- Desktop Navigation Menu -->
                 <nav class="hidden lg:flex space-x-1 items-center font-medium text-sm">
                     <button onclick="navigateRoute('beranda')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Beranda</button>
                     <button onclick="navigateRoute('profil')" class="nav-btn px-3 py-2 rounded-md hover:text-teal-600 hover:bg-teal-50 transition">Profil</button>
@@ -352,17 +352,17 @@
             </div>
         </section>
 
-        <!-- SECTION: ADMIN PANEL RAHASIA (DIAKSES MANUAL DENGAN MENAMBAHKAN #admin DI URL) -->
+        <!-- SECTION: ADMIN PANEL RAHASIA (#admin) -->
         <section id="section-admin" class="page-section hidden bg-gray-100 py-8 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Admin Header -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8 flex flex-wrap justify-between items-center gap-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Panel Admin Rahasia</span>
-                            <h2 class="text-2xl font-bold text-gray-900">Dashboard Manajemen Konten</h2>
+                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-teal-100 text-teal-800">Panel Admin Firebase Cloud</span>
+                            <h2 class="text-2xl font-bold text-gray-900">Dashboard Manajemen Terhubung Online</h2>
                         </div>
-                        <p class="text-xs text-gray-500 mt-1">Halaman ini tersembunyi dari publik dan hanya dapat diakses melalui URL rahasia admin.</p>
+                        <p class="text-xs text-gray-500 mt-1">Data tersimpan secara otomatis ke Firebase Cloud Firestore.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <button onclick="navigateRoute('beranda')" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow transition">
@@ -908,8 +908,26 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT APP LOGIC -->
-    <script>
+    <!-- FIREBASE SDK (MODULAR v10) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ==========================================
+        // GANTI DENGAN KODE FIREBASE CONFIG ANDA
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "ISI_API_KEY_ANDA",
+            authDomain: "ISI_PROJECT_ID.firebaseapp.com",
+            projectId: "ISI_PROJECT_ID",
+            storageBucket: "ISI_PROJECT_ID.appspot.com",
+            messagingSenderId: "ISI_MESSAGING_SENDER_ID",
+            appId: "ISI_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const defaultGuru = [
             { id: '1', nama: 'Siti Rahmah, S.Pd., M.Pd.', jabatan: 'Kepala Sekolah', foto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80' },
             { id: '2', nama: 'Ahmad Fauzi, S.Pd.', jabatan: 'Guru Kelas 6', foto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80' },
@@ -980,20 +998,65 @@
         };
 
         let state = {
-            berita: JSON.parse(localStorage.getItem('sdn2_berita')) || defaultBerita,
-            galeri: JSON.parse(localStorage.getItem('sdn2_galeri')) || defaultGaleri,
-            guru: JSON.parse(localStorage.getItem('sdn2_guru')) || defaultGuru,
-            ekstra: JSON.parse(localStorage.getItem('sdn2_ekstra')) || defaultEkstra,
-            ppdb: JSON.parse(localStorage.getItem('sdn2_ppdb')) || defaultPpdb,
-            profil: JSON.parse(localStorage.getItem('sdn2_profil')) || defaultProfil,
-            pengaturan: JSON.parse(localStorage.getItem('sdn2_pengaturan')) || defaultPengaturan
+            berita: defaultBerita,
+            galeri: defaultGaleri,
+            guru: defaultGuru,
+            ekstra: defaultEkstra,
+            ppdb: defaultPpdb,
+            profil: defaultProfil,
+            pengaturan: defaultPengaturan
         };
 
-        // HELPER: KONVERSI GAMBAR KE BASE64 DENGAN RE-COMPRESSION
-        function handleImageUpload(event, targetInputId) {
+        // FUNGSI LOAD DATA DARI FIREBASE FIRESTORE
+        async function loadDataFromFirebase() {
+            try {
+                const docRef = doc(db, "sekolahData", "config");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    state.berita = data.berita || defaultBerita;
+                    state.galeri = data.galeri || defaultGaleri;
+                    state.guru = data.guru || defaultGuru;
+                    state.ekstra = data.ekstra || defaultEkstra;
+                    state.ppdb = data.ppdb || defaultPpdb;
+                    state.profil = data.profil || defaultProfil;
+                    state.pengaturan = data.pengaturan || defaultPengaturan;
+                } else {
+                    // Jika belum ada di firebase, buat dokumen awal
+                    await saveDataToFirebase();
+                }
+                renderAll();
+            } catch (error) {
+                console.error("Gagal memuat data dari Firebase:", error);
+                renderAll();
+            }
+        }
+
+        // FUNGSI SIMPAN DATA KE FIREBASE FIRESTORE
+        async function saveDataToFirebase() {
+            try {
+                await setDoc(doc(db, "sekolahData", "config"), {
+                    berita: state.berita,
+                    galeri: state.galeri,
+                    guru: state.guru,
+                    ekstra: state.ekstra,
+                    ppdb: state.ppdb,
+                    profil: state.profil,
+                    pengaturan: state.pengaturan
+                });
+                renderAll();
+                alert('Data berhasil disimpan secara online ke Firebase!');
+            } catch (error) {
+                console.error("Gagal menyimpan ke Firebase:", error);
+                alert('Terjadi kesalahan saat menyimpan data ke Firebase.');
+            }
+        }
+
+        // Ekspose fungsi global agar bisa dipanggil elemen HTML
+        window.saveDataToStorage = saveDataToFirebase;
+        window.handleImageUpload = function(event, targetInputId) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
@@ -1003,71 +1066,42 @@
                     const MAX_HEIGHT = 800;
                     let width = img.width;
                     let height = img.height;
-
                     if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
+                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                     } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
+                        if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
                     }
-
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    document.getElementById(targetInputId).value = dataUrl;
+                    document.getElementById(targetInputId).value = canvas.toDataURL('image/jpeg', 0.7);
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
-        }
+        };
 
-        function saveDataToStorage() {
-            localStorage.setItem('sdn2_berita', JSON.stringify(state.berita));
-            localStorage.setItem('sdn2_galeri', JSON.stringify(state.galeri));
-            localStorage.setItem('sdn2_guru', JSON.stringify(state.guru));
-            localStorage.setItem('sdn2_ekstra', JSON.stringify(state.ekstra));
-            localStorage.setItem('sdn2_ppdb', JSON.stringify(state.ppdb));
-            localStorage.setItem('sdn2_profil', JSON.stringify(state.profil));
-            localStorage.setItem('sdn2_pengaturan', JSON.stringify(state.pengaturan));
-            renderAll();
-        }
-
-        // TOOL GOOGLE DRIVE CONVERTER
-        function convertDriveUrl() {
+        window.convertDriveUrl = function() {
             const raw = document.getElementById('driveInputUrl').value.trim();
             const container = document.getElementById('driveResultContainer');
             const resultSpan = document.getElementById('driveConvertedResult');
-
-            if (!raw) {
-                alert('Silakan tempelkan link Google Drive terlebih dahulu.');
-                return;
-            }
-
+            if (!raw) { alert('Silakan tempelkan link Google Drive terlebih dahulu.'); return; }
             const match = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
             if (match && match[1]) {
-                const converted = `https://drive.google.com/uc?export=view&id=${match[1]}`;
-                resultSpan.innerText = converted;
+                resultSpan.innerText = `https://drive.google.com/uc?export=view&id=${match[1]}`;
                 container.classList.remove('hidden');
             } else {
-                alert('Link Google Drive tidak valid! Pastikan link memiliki format https://drive.google.com/file/d/ID_FILE/view');
+                alert('Link Google Drive tidak valid!');
             }
-        }
+        };
 
-        function copyConvertedDrive() {
-            const text = document.getElementById('driveConvertedResult').innerText;
-            navigator.clipboard.writeText(text);
-            alert('Link berhasil disalin! Anda bisa langsung menempelkannya (Paste) ke kolom link gambar.');
-        }
+        window.copyConvertedDrive = function() {
+            navigator.clipboard.writeText(document.getElementById('driveConvertedResult').innerText);
+            alert('Link berhasil disalin!');
+        };
 
-        function navigateRoute(sectionId) {
+        window.navigateRoute = function(sectionId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('hidden'));
             const target = document.getElementById('section-' + sectionId);
             if (target) {
@@ -1075,44 +1109,242 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 window.location.hash = sectionId;
             }
-        }
+        };
 
-        // Tangani perubahan Hash URL secara diam-diam (misal: mengetik manual www.esridupo.my.id/#admin)
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.replace('#', '') || 'beranda';
-            if (document.getElementById('section-' + hash)) {
-                navigateRoute(hash);
-            }
-        });
-
-        function toggleMobileMenu() {
+        window.toggleMobileMenu = function() {
             document.getElementById('mobileMenu').classList.toggle('hidden');
-        }
+        };
 
-        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
-
-        function generateSosmedHtml(sizeClass = "w-8 h-8 text-sm") {
-            let html = '';
-            const list = [
-                { key: 'waUrl', icon: 'fa-brands fa-whatsapp', bg: 'bg-emerald-500 hover:bg-emerald-600', title: 'WhatsApp' },
-                { key: 'ytUrl', icon: 'fa-brands fa-youtube', bg: 'bg-red-600 hover:bg-red-700', title: 'YouTube' },
-                { key: 'fbUrl', icon: 'fa-brands fa-facebook-f', bg: 'bg-blue-600 hover:bg-blue-700', title: 'Facebook' },
-                { key: 'igUrl', icon: 'fa-brands fa-instagram', bg: 'bg-pink-600 hover:bg-pink-700', title: 'Instagram' }
-            ];
-
-            list.forEach(item => {
-                const url = state.profil[item.key];
-                if (url && url.trim() !== '') {
-                    html += `
-                        <a href="${url}" target="_blank" title="${item.title}" class="${sizeClass} rounded-full ${item.bg} text-white flex items-center justify-center shadow transition transform hover:-translate-y-0.5">
-                            <i class="${item.icon}"></i>
-                        </a>
-                    `;
-                }
+        window.switchAdminTab = function(tabName) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'border-t-2', 'border-teal-600', 'text-teal-600', 'shadow-sm');
+                btn.classList.add('text-gray-500');
             });
+            document.getElementById('adminTab-' + tabName).classList.remove('hidden');
+            const activeBtn = document.getElementById('tabBtn-' + tabName);
+            activeBtn.classList.add('bg-white', 'border-t-2', 'border-teal-600', 'text-teal-600', 'shadow-sm');
+            activeBtn.classList.remove('text-gray-500');
+        };
 
-            return html || '<span class="text-xs text-gray-400">Belum ada sosmed.</span>';
-        }
+        window.savePengaturanTampilan = function(e) {
+            e.preventDefault();
+            state.pengaturan.logoUrl = document.getElementById('editLogoUrl').value.trim();
+            state.pengaturan.logoIcon = document.getElementById('editLogoIcon').value.trim();
+            state.pengaturan.heroWallpaper = document.getElementById('editHeroWallpaper').value.trim();
+            state.pengaturan.heroTag = document.getElementById('editHeroTag').value.trim();
+            state.pengaturan.heroJudul = document.getElementById('editHeroJudul').value.trim();
+            state.pengaturan.heroDeskripsi = document.getElementById('editHeroDeskripsi').value.trim();
+            saveDataToFirebase();
+        };
+
+        window.saveProfilForm = function(e) {
+            e.preventDefault();
+            state.profil.namaSekolah = document.getElementById('editNamaSekolah').value;
+            state.profil.sloganSekolah = document.getElementById('editSloganSekolah').value;
+            state.profil.npsn = document.getElementById('editNpsn').value;
+            state.profil.statusSekolah = document.getElementById('editStatusSekolah').value;
+            state.profil.akreditasi = document.getElementById('editAkreditasi').value;
+            state.profil.kecamatan = document.getElementById('editKecamatan').value;
+            state.profil.kabupaten = document.getElementById('editKabupaten').value;
+            state.profil.jenjang = document.getElementById('editJenjang').value;
+            state.profil.namaKepsek = document.getElementById('editNamaKepsek').value;
+            state.profil.fotoKepsek = document.getElementById('editFotoKepsek').value;
+            state.profil.sambutanKepsek = document.getElementById('editSambutanKepsek').value;
+            state.profil.visi = document.getElementById('editVisi').value;
+            state.profil.misi = document.getElementById('editMisi').value;
+            state.profil.alamat = document.getElementById('editAlamat').value;
+            state.profil.telepon = document.getElementById('editTelepon').value;
+            state.profil.email = document.getElementById('editEmail').value;
+            state.profil.waUrl = document.getElementById('editWaUrl').value;
+            state.profil.ytUrl = document.getElementById('editYtUrl').value;
+            state.profil.fbUrl = document.getElementById('editFbUrl').value;
+            state.profil.igUrl = document.getElementById('editIgUrl').value;
+            saveDataToFirebase();
+        };
+
+        window.savePpdbForm = function(e) {
+            e.preventDefault();
+            state.ppdb.waUrl = document.getElementById('editPpdbWa').value;
+            state.ppdb.formularUrl = document.getElementById('editPpdbFormular').value;
+            state.ppdb.jadwal = document.getElementById('editPpdbJadwal').value;
+            state.ppdb.syarat = document.getElementById('editPpdbSyarat').value;
+            saveDataToFirebase();
+        };
+
+        // CRUD Guru
+        window.openModalGuru = function(id = null) {
+            if (id) {
+                const g = state.guru.find(item => item.id === id);
+                document.getElementById('guruId').value = g.id;
+                document.getElementById('guruNama').value = g.nama;
+                document.getElementById('guruJabatan').value = g.jabatan;
+                document.getElementById('guruFoto').value = g.foto;
+                document.getElementById('modalGuruTitle').innerText = 'Edit Data Guru';
+            } else {
+                document.getElementById('guruId').value = '';
+                document.getElementById('guruNama').value = '';
+                document.getElementById('guruJabatan').value = '';
+                document.getElementById('guruFoto').value = '';
+                document.getElementById('modalGuruTitle').innerText = 'Tambah Data Guru Baru';
+            }
+            document.getElementById('modalGuru').classList.remove('hidden');
+        };
+        window.closeModalGuru = function() { document.getElementById('modalGuru').classList.add('hidden'); };
+        window.saveGuru = function(e) {
+            e.preventDefault();
+            const id = document.getElementById('guruId').value;
+            const nama = document.getElementById('guruNama').value;
+            const jabatan = document.getElementById('guruJabatan').value;
+            const foto = document.getElementById('guruFoto').value;
+            if (id) {
+                const idx = state.guru.findIndex(g => g.id === id);
+                if (idx !== -1) state.guru[idx] = { id, nama, jabatan, foto };
+            } else {
+                state.guru.push({ id: Date.now().toString(), nama, jabatan, foto });
+            }
+            saveDataToFirebase();
+            closeModalGuru();
+        };
+        window.editGuru = function(id) { openModalGuru(id); };
+        window.deleteGuru = function(id) {
+            if (confirm('Yakin ingin menghapus guru ini?')) {
+                state.guru = state.guru.filter(g => g.id !== id);
+                saveDataToFirebase();
+            }
+        };
+
+        // CRUD Ekstra
+        window.openModalEkstra = function(id = null) {
+            if (id) {
+                const e = state.ekstra.find(item => item.id === id);
+                document.getElementById('ekstraId').value = e.id;
+                document.getElementById('ekstraNama').value = e.nama;
+                document.getElementById('ekstraIkon').value = e.ikon;
+                document.getElementById('ekstraGambar').value = e.gambar;
+                document.getElementById('ekstraDeskripsi').value = e.deskripsi;
+                document.getElementById('modalEkstraTitle').innerText = 'Edit Ekstrakurikuler';
+            } else {
+                document.getElementById('ekstraId').value = '';
+                document.getElementById('ekstraNama').value = '';
+                document.getElementById('ekstraIkon').value = 'fa-solid fa-star';
+                document.getElementById('ekstraGambar').value = '';
+                document.getElementById('ekstraDeskripsi').value = '';
+                document.getElementById('modalEkstraTitle').innerText = 'Tambah Ekstrakurikuler Baru';
+            }
+            document.getElementById('modalEkstra').classList.remove('hidden');
+        };
+        window.closeModalEkstra = function() { document.getElementById('modalEkstra').classList.add('hidden'); };
+        window.saveEkstra = function(e) {
+            e.preventDefault();
+            const id = document.getElementById('ekstraId').value;
+            const nama = document.getElementById('ekstraNama').value;
+            const ikon = document.getElementById('ekstraIkon').value;
+            const gambar = document.getElementById('ekstraGambar').value;
+            const deskripsi = document.getElementById('ekstraDeskripsi').value;
+            if (id) {
+                const idx = state.ekstra.findIndex(item => item.id === id);
+                if (idx !== -1) state.ekstra[idx] = { id, nama, ikon, gambar, deskripsi };
+            } else {
+                state.ekstra.push({ id: Date.now().toString(), nama, ikon, gambar, deskripsi });
+            }
+            saveDataToFirebase();
+            closeModalEkstra();
+        };
+        window.editEkstra = function(id) { openModalEkstra(id); };
+        window.deleteEkstra = function(id) {
+            if (confirm('Yakin menghapus ekstrakurikuler ini?')) {
+                state.ekstra = state.ekstra.filter(e => e.id !== id);
+                saveDataToFirebase();
+            }
+        };
+
+        // CRUD Berita
+        window.openModalBerita = function(id = null) {
+            if (id) {
+                const b = state.berita.find(item => item.id === id);
+                document.getElementById('beritaId').value = b.id;
+                document.getElementById('beritaJudul').value = b.judul;
+                document.getElementById('beritaTanggal').value = b.tanggal;
+                document.getElementById('beritaKategori').value = b.kategori;
+                document.getElementById('beritaGambar').value = b.gambar;
+                document.getElementById('beritaRingkasan').value = b.ringkasan;
+                document.getElementById('beritaIsi').value = b.isi;
+                document.getElementById('modalBeritaTitle').innerText = 'Edit Berita';
+            } else {
+                document.getElementById('beritaId').value = '';
+                document.getElementById('beritaJudul').value = '';
+                document.getElementById('beritaTanggal').value = new Date().toISOString().split('T')[0];
+                document.getElementById('beritaKategori').value = 'Kegiatan Sekolah';
+                document.getElementById('beritaGambar').value = '';
+                document.getElementById('beritaRingkasan').value = '';
+                document.getElementById('beritaIsi').value = '';
+                document.getElementById('modalBeritaTitle').innerText = 'Tambah Berita Baru';
+            }
+            document.getElementById('modalBerita').classList.remove('hidden');
+        };
+        window.closeModalBerita = function() { document.getElementById('modalBerita').classList.add('hidden'); };
+        window.saveBerita = function(e) {
+            e.preventDefault();
+            const id = document.getElementById('beritaId').value;
+            const judul = document.getElementById('beritaJudul').value;
+            const tanggal = document.getElementById('beritaTanggal').value;
+            const kategori = document.getElementById('beritaKategori').value;
+            const gambar = document.getElementById('beritaGambar').value;
+            const ringkasan = document.getElementById('beritaRingkasan').value;
+            const isi = document.getElementById('beritaIsi').value;
+            if (id) {
+                const idx = state.berita.findIndex(b => b.id === id);
+                if (idx !== -1) state.berita[idx] = { id, judul, tanggal, kategori, gambar, ringkasan, isi };
+            } else {
+                state.berita.unshift({ id: Date.now().toString(), judul, tanggal, kategori, gambar, ringkasan, isi });
+            }
+            saveDataToFirebase();
+            closeModalBerita();
+        };
+        window.editBerita = function(id) { openModalBerita(id); };
+        window.deleteBerita = function(id) {
+            if (confirm('Hapus berita ini?')) {
+                state.berita = state.berita.filter(b => b.id !== id);
+                saveDataToFirebase();
+            }
+        };
+        window.readBeritaDetail = function(id) {
+            const b = state.berita.find(item => item.id === id);
+            if (!b) return;
+            document.getElementById('readBeritaKategori').innerText = b.kategori;
+            document.getElementById('readBeritaJudul').innerText = b.judul;
+            document.getElementById('readBeritaTanggal').innerText = 'Dipublikasikan pada: ' + b.tanggal;
+            document.getElementById('readBeritaGambar').src = b.gambar;
+            document.getElementById('readBeritaIsi').innerText = b.isi;
+            document.getElementById('modalReadBerita').classList.remove('hidden');
+        };
+        window.closeModalReadBerita = function() { document.getElementById('modalReadBerita').classList.add('hidden'); };
+
+        // CRUD Galeri
+        window.openModalGaleri = function() {
+            document.getElementById('galeriId').value = '';
+            document.getElementById('galeriJudul').value = '';
+            document.getElementById('galeriUrl').value = '';
+            document.getElementById('galeriKategori').value = '';
+            document.getElementById('modalGaleri').classList.remove('hidden');
+        };
+        window.closeModalGaleri = function() { document.getElementById('modalGaleri').classList.add('hidden'); };
+        window.saveGaleri = function(e) {
+            e.preventDefault();
+            const judul = document.getElementById('galeriJudul').value;
+            const url = document.getElementById('galeriUrl').value;
+            const kategori = document.getElementById('galeriKategori').value || 'Aktivitas';
+            state.galeri.unshift({ id: Date.now().toString(), judul, url, kategori });
+            saveDataToFirebase();
+            closeModalGaleri();
+        };
+        window.deleteGaleri = function(id) {
+            if (confirm('Hapus foto dari galeri?')) {
+                state.galeri = state.galeri.filter(g => g.id !== id);
+                saveDataToFirebase();
+            }
+        };
 
         function renderPublic() {
             document.title = `${state.profil.namaSekolah} - Website Resmi`;
@@ -1158,7 +1390,6 @@
             document.getElementById('footerSosmedContainer').innerHTML = generateSosmedHtml('w-8 h-8 text-sm');
             document.getElementById('kontakSosmedContainer').innerHTML = generateSosmedHtml('w-10 h-10 text-base');
 
-            // Render PPDB Public
             document.getElementById('ppdbLinkWaBtn').href = state.ppdb.waUrl || '#';
             document.getElementById('ppdbLinkDriveBtn').href = state.ppdb.formularUrl || '#';
             document.getElementById('ppdbJadwalText').innerText = state.ppdb.jadwal;
@@ -1166,7 +1397,6 @@
             const listSyarat = state.ppdb.syarat.split('\n').filter(s => s.trim() !== '');
             document.getElementById('ppdbSyaratList').innerHTML = listSyarat.map(s => `<li>${s}</li>`).join('');
 
-            // Render Guru Public
             document.getElementById('publicGuruGrid').innerHTML = state.guru.map(g => `
                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 text-center p-5">
                     <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 border-4 border-teal-500 shadow-inner">
@@ -1177,7 +1407,6 @@
                 </div>
             `).join('') || '<p class="text-gray-500 col-span-4 text-center">Belum ada data guru.</p>';
 
-            // Render Ekstra Public
             document.getElementById('publicEkstraGrid').innerHTML = state.ekstra.map(e => `
                 <div class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm flex flex-col h-full">
                     <div class="h-48 relative overflow-hidden bg-teal-900">
@@ -1193,7 +1422,6 @@
                 </div>
             `).join('') || '<p class="text-gray-500 col-span-3 text-center">Belum ada data ekstrakurikuler.</p>';
 
-            // Render Berita
             const newsCardHtml = (b) => `
                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-teal-100 hover:shadow-md transition flex flex-col h-full">
                     <img src="${b.gambar}" alt="${b.judul}" class="w-full h-48 object-cover">
@@ -1214,7 +1442,6 @@
             document.getElementById('homeBeritaContainer').innerHTML = state.berita.slice(0, 3).map(newsCardHtml).join('') || '<p class="text-gray-500 col-span-3 text-center">Belum ada berita.</p>';
             document.getElementById('fullBeritaContainer').innerHTML = state.berita.map(newsCardHtml).join('') || '<p class="text-gray-500 col-span-3 text-center">Belum ada berita.</p>';
 
-            // Render Galeri
             document.getElementById('publicGaleriContainer').innerHTML = state.galeri.map(g => `
                 <div class="group relative rounded-xl overflow-hidden shadow-sm bg-gray-100 border border-gray-200">
                     <img src="${g.url}" alt="${g.judul}" class="w-full h-52 object-cover group-hover:scale-105 transition duration-300">
@@ -1227,7 +1454,6 @@
         }
 
         function renderAdmin() {
-            // Fill Form Pengaturan Tampilan
             document.getElementById('editLogoUrl').value = state.pengaturan.logoUrl || '';
             document.getElementById('editLogoIcon').value = state.pengaturan.logoIcon || '';
             document.getElementById('editHeroWallpaper').value = state.pengaturan.heroWallpaper || '';
@@ -1235,7 +1461,6 @@
             document.getElementById('editHeroJudul').value = state.pengaturan.heroJudul || '';
             document.getElementById('editHeroDeskripsi').value = state.pengaturan.heroDeskripsi || '';
 
-            // Fill Form Profil
             document.getElementById('editNamaSekolah').value = state.profil.namaSekolah;
             document.getElementById('editSloganSekolah').value = state.profil.sloganSekolah;
             document.getElementById('editNpsn').value = state.profil.npsn;
@@ -1259,13 +1484,11 @@
             document.getElementById('editFbUrl').value = state.profil.fbUrl || '';
             document.getElementById('editIgUrl').value = state.profil.igUrl || '';
 
-            // Fill Form PPDB
             document.getElementById('editPpdbWa').value = state.ppdb.waUrl || '';
             document.getElementById('editPpdbFormular').value = state.ppdb.formularUrl || '';
             document.getElementById('editPpdbJadwal').value = state.ppdb.jadwal || '';
             document.getElementById('editPpdbSyarat').value = state.ppdb.syarat || '';
 
-            // Render Admin Guru
             document.getElementById('adminGuruGrid').innerHTML = state.guru.map(g => `
                 <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm text-center flex flex-col justify-between">
                     <div>
@@ -1280,7 +1503,6 @@
                 </div>
             `).join('');
 
-            // Render Admin Ekstra
             document.getElementById('adminEkstraGrid').innerHTML = state.ekstra.map(e => `
                 <div class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex flex-col justify-between">
                     <div>
@@ -1298,7 +1520,6 @@
                 </div>
             `).join('');
 
-            // Render Admin Berita Table
             document.getElementById('adminBeritaTable').innerHTML = state.berita.map(b => `
                 <tr class="hover:bg-gray-50">
                     <td class="p-3"><img src="${b.gambar}" class="w-12 h-12 object-cover rounded-lg"></td>
@@ -1312,7 +1533,6 @@
                 </tr>
             `).join('');
 
-            // Render Admin Galeri
             document.getElementById('adminGaleriGrid').innerHTML = state.galeri.map(g => `
                 <div class="bg-white rounded-xl p-3 border border-gray-200 shadow-sm">
                     <img src="${g.url}" alt="${g.judul}" class="w-full h-36 object-cover rounded-lg mb-2">
@@ -1330,265 +1550,32 @@
             renderAdmin();
         }
 
-        function switchAdminTab(tabName) {
-            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'border-t-2', 'border-teal-600', 'text-teal-600', 'shadow-sm');
-                btn.classList.add('text-gray-500');
+        function generateSosmedHtml(sizeClass = "w-8 h-8 text-sm") {
+            let html = '';
+            const list = [
+                { key: 'waUrl', icon: 'fa-brands fa-whatsapp', bg: 'bg-emerald-500 hover:bg-emerald-600', title: 'WhatsApp' },
+                { key: 'ytUrl', icon: 'fa-brands fa-youtube', bg: 'bg-red-600 hover:bg-red-700', title: 'YouTube' },
+                { key: 'fbUrl', icon: 'fa-brands fa-facebook-f', bg: 'bg-blue-600 hover:bg-blue-700', title: 'Facebook' },
+                { key: 'igUrl', icon: 'fa-brands fa-instagram', bg: 'bg-pink-600 hover:bg-pink-700', title: 'Instagram' }
+            ];
+            list.forEach(item => {
+                const url = state.profil[item.key];
+                if (url && url.trim() !== '') {
+                    html += `<a href="${url}" target="_blank" title="${item.title}" class="${sizeClass} rounded-full ${item.bg} text-white flex items-center justify-center shadow transition transform hover:-translate-y-0.5"><i class="${item.icon}"></i></a>`;
+                }
             });
-
-            document.getElementById('adminTab-' + tabName).classList.remove('hidden');
-            const activeBtn = document.getElementById('tabBtn-' + tabName);
-            activeBtn.classList.add('bg-white', 'border-t-2', 'border-teal-600', 'text-teal-600', 'shadow-sm');
-            activeBtn.classList.remove('text-gray-500');
+            return html || '<span class="text-xs text-gray-400">Belum ada sosmed.</span>';
         }
 
-        function savePengaturanTampilan(e) {
-            e.preventDefault();
-            state.pengaturan.logoUrl = document.getElementById('editLogoUrl').value.trim();
-            state.pengaturan.logoIcon = document.getElementById('editLogoIcon').value.trim();
-            state.pengaturan.heroWallpaper = document.getElementById('editHeroWallpaper').value.trim();
-            state.pengaturan.heroTag = document.getElementById('editHeroTag').value.trim();
-            state.pengaturan.heroJudul = document.getElementById('editHeroJudul').value.trim();
-            state.pengaturan.heroDeskripsi = document.getElementById('editHeroDeskripsi').value.trim();
-            
-            saveDataToStorage();
-            alert('Pengaturan Logo & Wallpaper berhasil disimpan!');
-        }
-
-        function saveProfilForm(e) {
-            e.preventDefault();
-            state.profil.namaSekolah = document.getElementById('editNamaSekolah').value;
-            state.profil.sloganSekolah = document.getElementById('editSloganSekolah').value;
-            state.profil.npsn = document.getElementById('editNpsn').value;
-            state.profil.statusSekolah = document.getElementById('editStatusSekolah').value;
-            state.profil.akreditasi = document.getElementById('editAkreditasi').value;
-            state.profil.kecamatan = document.getElementById('editKecamatan').value;
-            state.profil.kabupaten = document.getElementById('editKabupaten').value;
-            state.profil.jenjang = document.getElementById('editJenjang').value;
-
-            state.profil.namaKepsek = document.getElementById('editNamaKepsek').value;
-            state.profil.fotoKepsek = document.getElementById('editFotoKepsek').value;
-            state.profil.sambutanKepsek = document.getElementById('editSambutanKepsek').value;
-            state.profil.visi = document.getElementById('editVisi').value;
-            state.profil.misi = document.getElementById('editMisi').value;
-            state.profil.alamat = document.getElementById('editAlamat').value;
-            state.profil.telepon = document.getElementById('editTelepon').value;
-            state.profil.email = document.getElementById('editEmail').value;
-
-            state.profil.waUrl = document.getElementById('editWaUrl').value;
-            state.profil.ytUrl = document.getElementById('editYtUrl').value;
-            state.profil.fbUrl = document.getElementById('editFbUrl').value;
-            state.profil.igUrl = document.getElementById('editIgUrl').value;
-
-            saveDataToStorage();
-            alert('Profil sekolah dan informasi sosmed berhasil diperbarui!');
-        }
-
-        function savePpdbForm(e) {
-            e.preventDefault();
-            state.ppdb.waUrl = document.getElementById('editPpdbWa').value;
-            state.ppdb.formularUrl = document.getElementById('editPpdbFormular').value;
-            state.ppdb.jadwal = document.getElementById('editPpdbJadwal').value;
-            state.ppdb.syarat = document.getElementById('editPpdbSyarat').value;
-
-            saveDataToStorage();
-            alert('Informasi PPDB berhasil diperbarui!');
-        }
-
-        // CRUD GURU
-        function openModalGuru(id = null) {
-            if (id) {
-                const g = state.guru.find(item => item.id === id);
-                document.getElementById('guruId').value = g.id;
-                document.getElementById('guruNama').value = g.nama;
-                document.getElementById('guruJabatan').value = g.jabatan;
-                document.getElementById('guruFoto').value = g.foto;
-                document.getElementById('modalGuruTitle').innerText = 'Edit Data Guru';
-            } else {
-                document.getElementById('guruId').value = '';
-                document.getElementById('guruNama').value = '';
-                document.getElementById('guruJabatan').value = '';
-                document.getElementById('guruFoto').value = '';
-                document.getElementById('modalGuruTitle').innerText = 'Tambah Data Guru Baru';
+        // Routing Hash URL
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '') || 'beranda';
+            if (document.getElementById('section-' + hash)) {
+                navigateRoute(hash);
             }
-            document.getElementById('modalGuru').classList.remove('hidden');
-        }
-        function closeModalGuru() { document.getElementById('modalGuru').classList.add('hidden'); }
+        });
 
-        function saveGuru(e) {
-            e.preventDefault();
-            const id = document.getElementById('guruId').value;
-            const nama = document.getElementById('guruNama').value;
-            const jabatan = document.getElementById('guruJabatan').value;
-            const foto = document.getElementById('guruFoto').value;
-
-            if (id) {
-                const idx = state.guru.findIndex(g => g.id === id);
-                if (idx !== -1) state.guru[idx] = { id, nama, jabatan, foto };
-            } else {
-                state.guru.push({ id: Date.now().toString(), nama, jabatan, foto });
-            }
-
-            saveDataToStorage();
-            closeModalGuru();
-        }
-
-        function editGuru(id) { openModalGuru(id); }
-        function deleteGuru(id) {
-            if (confirm('Yakin ingin menghapus guru ini?')) {
-                state.guru = state.guru.filter(g => g.id !== id);
-                saveDataToStorage();
-            }
-        }
-
-        // CRUD EKSTRA
-        function openModalEkstra(id = null) {
-            if (id) {
-                const e = state.ekstra.find(item => item.id === id);
-                document.getElementById('ekstraId').value = e.id;
-                document.getElementById('ekstraNama').value = e.nama;
-                document.getElementById('ekstraIkon').value = e.ikon;
-                document.getElementById('ekstraGambar').value = e.gambar;
-                document.getElementById('ekstraDeskripsi').value = e.deskripsi;
-                document.getElementById('modalEkstraTitle').innerText = 'Edit Ekstrakurikuler';
-            } else {
-                document.getElementById('ekstraId').value = '';
-                document.getElementById('ekstraNama').value = '';
-                document.getElementById('ekstraIkon').value = 'fa-solid fa-star';
-                document.getElementById('ekstraGambar').value = '';
-                document.getElementById('ekstraDeskripsi').value = '';
-                document.getElementById('modalEkstraTitle').innerText = 'Tambah Ekstrakurikuler Baru';
-            }
-            document.getElementById('modalEkstra').classList.remove('hidden');
-        }
-        function closeModalEkstra() { document.getElementById('modalEkstra').classList.add('hidden'); }
-
-        function saveEkstra(e) {
-            e.preventDefault();
-            const id = document.getElementById('ekstraId').value;
-            const nama = document.getElementById('ekstraNama').value;
-            const ikon = document.getElementById('ekstraIkon').value;
-            const gambar = document.getElementById('ekstraGambar').value;
-            const deskripsi = document.getElementById('ekstraDeskripsi').value;
-
-            if (id) {
-                const idx = state.ekstra.findIndex(item => item.id === id);
-                if (idx !== -1) state.ekstra[idx] = { id, nama, ikon, gambar, deskripsi };
-            } else {
-                state.ekstra.push({ id: Date.now().toString(), nama, ikon, gambar, deskripsi });
-            }
-
-            saveDataToStorage();
-            closeModalEkstra();
-        }
-
-        function editEkstra(id) { openModalEkstra(id); }
-        function deleteEkstra(id) {
-            if (confirm('Yakin menghapus ekstrakurikuler ini?')) {
-                state.ekstra = state.ekstra.filter(e => e.id !== id);
-                saveDataToStorage();
-            }
-        }
-
-        // CRUD BERITA
-        function openModalBerita(id = null) {
-            if (id) {
-                const b = state.berita.find(item => item.id === id);
-                document.getElementById('beritaId').value = b.id;
-                document.getElementById('beritaJudul').value = b.judul;
-                document.getElementById('beritaTanggal').value = b.tanggal;
-                document.getElementById('beritaKategori').value = b.kategori;
-                document.getElementById('beritaGambar').value = b.gambar;
-                document.getElementById('beritaRingkasan').value = b.ringkasan;
-                document.getElementById('beritaIsi').value = b.isi;
-                document.getElementById('modalBeritaTitle').innerText = 'Edit Berita';
-            } else {
-                document.getElementById('beritaId').value = '';
-                document.getElementById('beritaJudul').value = '';
-                document.getElementById('beritaTanggal').value = new Date().toISOString().split('T')[0];
-                document.getElementById('beritaKategori').value = 'Kegiatan Sekolah';
-                document.getElementById('beritaGambar').value = '';
-                document.getElementById('beritaRingkasan').value = '';
-                document.getElementById('beritaIsi').value = '';
-                document.getElementById('modalBeritaTitle').innerText = 'Tambah Berita Baru';
-            }
-            document.getElementById('modalBerita').classList.remove('hidden');
-        }
-        function closeModalBerita() { document.getElementById('modalBerita').classList.add('hidden'); }
-
-        function saveBerita(e) {
-            e.preventDefault();
-            const id = document.getElementById('beritaId').value;
-            const judul = document.getElementById('beritaJudul').value;
-            const tanggal = document.getElementById('beritaTanggal').value;
-            const kategori = document.getElementById('beritaKategori').value;
-            const gambar = document.getElementById('beritaGambar').value;
-            const ringkasan = document.getElementById('beritaRingkasan').value;
-            const isi = document.getElementById('beritaIsi').value;
-
-            if (id) {
-                const idx = state.berita.findIndex(b => b.id === id);
-                if (idx !== -1) state.berita[idx] = { id, judul, tanggal, kategori, gambar, ringkasan, isi };
-            } else {
-                state.berita.unshift({ id: Date.now().toString(), judul, tanggal, kategori, gambar, ringkasan, isi });
-            }
-
-            saveDataToStorage();
-            closeModalBerita();
-        }
-
-        function editBerita(id) { openModalBerita(id); }
-        function deleteBerita(id) {
-            if (confirm('Hapus berita ini?')) {
-                state.berita = state.berita.filter(b => b.id !== id);
-                saveDataToStorage();
-            }
-        }
-
-        function readBeritaDetail(id) {
-            const b = state.berita.find(item => item.id === id);
-            if (!b) return;
-
-            document.getElementById('readBeritaKategori').innerText = b.kategori;
-            document.getElementById('readBeritaJudul').innerText = b.judul;
-            document.getElementById('readBeritaTanggal').innerText = 'Dipublikasikan pada: ' + b.tanggal;
-            document.getElementById('readBeritaGambar').src = b.gambar;
-            document.getElementById('readBeritaIsi').innerText = b.isi;
-
-            document.getElementById('modalReadBerita').classList.remove('hidden');
-        }
-        function closeModalReadBerita() { document.getElementById('modalReadBerita').classList.add('hidden'); }
-
-        // CRUD GALERI
-        function openModalGaleri() {
-            document.getElementById('galeriId').value = '';
-            document.getElementById('galeriJudul').value = '';
-            document.getElementById('galeriUrl').value = '';
-            document.getElementById('galeriKategori').value = '';
-            document.getElementById('modalGaleri').classList.remove('hidden');
-        }
-        function closeModalGaleri() { document.getElementById('modalGaleri').classList.add('hidden'); }
-
-        function saveGaleri(e) {
-            e.preventDefault();
-            const judul = document.getElementById('galeriJudul').value;
-            const url = document.getElementById('galeriUrl').value;
-            const kategori = document.getElementById('galeriKategori').value || 'Aktivitas';
-
-            state.galeri.unshift({ id: Date.now().toString(), judul, url, kategori });
-            saveDataToStorage();
-            closeModalGaleri();
-        }
-
-        function deleteGaleri(id) {
-            if (confirm('Hapus foto dari galeri?')) {
-                state.galeri = state.galeri.filter(g => g.id !== id);
-                saveDataToStorage();
-            }
-        }
-
-        // INITIAL LOAD ROUTING BERDASARKAN HASH ATAU DEFAULT
+        // Load awal saat halaman dibuka
         const initialHash = window.location.hash.replace('#', '') || 'beranda';
         if (document.getElementById('section-' + initialHash)) {
             navigateRoute(initialHash);
@@ -1596,7 +1583,8 @@
             navigateRoute('beranda');
         }
 
-        renderAll();
+        // Ambil data pertama kali dari Firebase Firestore
+        loadDataFromFirebase();
     </script>
 </body>
 </html>
